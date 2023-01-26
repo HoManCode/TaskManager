@@ -1,7 +1,8 @@
-package com.EmployeeManagement.EM.model;
+package com.TaskManagement.TM.model;
 
 import javax.annotation.processing.Generated;
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -18,12 +19,14 @@ public class Employee {
     @Column(name="email_id")
     private String emailId;
 
+    @OneToMany(mappedBy = "assignee")
+    private List<Task> tasks;
+
     public Employee() {
 
     }
 
     public Employee(String firstName, String lastName, String emailId) {
-        super();
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailId = emailId;
@@ -59,5 +62,13 @@ public class Employee {
 
     public void setEmailId(String emailId) {
         this.emailId = emailId;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 }

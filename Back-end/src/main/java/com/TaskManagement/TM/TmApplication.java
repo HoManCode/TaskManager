@@ -1,13 +1,13 @@
-package com.EmployeeManagement.EM;
+package com.TaskManagement.TM;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class EmApplication {
+public class TmApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(EmApplication.class, args);
+		SpringApplication.run(TmApplication.class, args);
 	}
 
 }

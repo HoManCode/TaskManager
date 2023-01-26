@@ -1,10 +1,8 @@
-package com.EmployeeManagement.EM.repository;
+package com.TaskManagement.TM.repository;
 
-import com.EmployeeManagement.EM.model.Employee;
+import com.TaskManagement.TM.model.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.UUID;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository <Employee, Long>{
