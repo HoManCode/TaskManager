@@ -6,6 +6,7 @@ import FooterComponent from "./components/FooterComponents";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CreateEmployeeComponent from "./components/CreateEmployeeComponent";
 import ViewEmployeeComponent from "./components/ViewEmployeeComponent";
+import LogIn from "./components/LogIn";
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
       <HeaderComponents />
       <div className="container">
         <Routes>
-          <Route path="/" element={<ListEmployeeComponent />} />
+          <Route path="/" element={<LogIn />} />
           <Route path="/employees" element={<ListEmployeeComponent />} />
           <Route path="/add-employee/" element={<CreateEmployeeComponent />} />
           <Route
