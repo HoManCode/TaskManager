@@ -44,7 +44,7 @@ public class EmployeeController {
 
         employee.setFirstName(employeeDetails.getFirstName());
         employee.setLastName(employeeDetails.getLastName());
-        employee.setEmailId(employeeDetails.getEmailId());
+        employee.setEmail(employeeDetails.getEmail());
 
         Employee updatedEmployee = employeeRepository.save(employee);
 

@@ -1,13 +1,11 @@
 package com.TaskManagement.TM.model;
 
-import javax.annotation.processing.Generated;
 import javax.persistence.*;
 import java.util.List;
-import java.util.UUID;
+
 
 @Entity
-@Table(name="employees")
-
+@Table(name="employees", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,20 +14,24 @@ public class Employee {
     private String firstName;
     @Column(name="last_name")
     private String lastName;
-    @Column(name="email_id")
-    private String emailId;
+    @Column(name="email")
+    private String email;
 
     @OneToMany(mappedBy = "assignee")
     private List<Task> tasks;
+
+    private String password;
+
+    private Role role;
 
     public Employee() {
 
     }
 
-    public Employee(String firstName, String lastName, String emailId) {
+    public Employee(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.emailId = emailId;
+        this.email = email;
     }
 
     public Long getId() {
@@ -56,12 +58,12 @@ public class Employee {
         this.lastName = lastName;
     }
 
-    public String getEmailId() {
-        return emailId;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmailId(String emailId) {
-        this.emailId = emailId;
+    public void setEmail(String emailId) {
+        this.email = emailId;
     }
 
     public List<Task> getTasks() {
@@ -70,5 +72,21 @@ public class Employee {
 
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

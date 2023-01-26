@@ -5,11 +5,11 @@ import EmployeeService from "../services/EmployeeService";
 const CreateEmployeeComponent = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [emailId, setEmailId] = useState("");
+  const [email, setEmail] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const employeeData = { firstName, lastName, emailId };
+  const employeeData = { firstName, lastName, email };
 
   function saveEmployee(e) {
     e.preventDefault();
@@ -17,7 +17,7 @@ const CreateEmployeeComponent = () => {
     if (
       employeeData.firstName !== "" &&
       employeeData.lastName !== "" &&
-      employeeData.emailId !== ""
+      employeeData.email !== ""
     ) {
       if (id) {
         EmployeeService.updateEmployee(id, employeeData)
@@ -47,7 +47,7 @@ const CreateEmployeeComponent = () => {
         .then((res) => {
           setFirstName(res.data.firstName);
           setLastName(res.data.lastName);
-          setEmailId(res.data.emailId);
+          setEmail(res.data.email);
         })
         .catch((e) => console.log(e));
     }
@@ -87,8 +87,8 @@ const CreateEmployeeComponent = () => {
                 <div className="form-group mb-2">
                   <input
                     className="form-control"
-                    value={emailId}
-                    onChange={(e) => setEmailId(e.target.value)}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     type="email"
                     placeholder="Enter Email"
                   />

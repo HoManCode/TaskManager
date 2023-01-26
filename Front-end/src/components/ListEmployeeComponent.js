@@ -24,7 +24,7 @@ const ListEmployeeComponent = () => {
     EmployeeService.deleteEmployeeById(id)
       .then(
         setEmployeeArray(
-          employeeArray.filter((employee) => employee.emailId === id)
+          employeeArray.filter((employee) => employee.email === id)
         )
       )
       .catch((e) => console.log(e));
@@ -48,7 +48,7 @@ const ListEmployeeComponent = () => {
             <tr>
               <th> Employee First Name</th>
               <th> Employee Last Name</th>
-              <th> Employee Email Id</th>
+              <th> Employee Email</th>
               <th> Actions</th>
             </tr>
           </thead>
@@ -57,7 +57,7 @@ const ListEmployeeComponent = () => {
               <tr key={employee.id}>
                 <td> {employee.firstName} </td>
                 <td> {employee.lastName} </td>
-                <td> {employee.emailId} </td>
+                <td> {employee.email} </td>
                 <td>
                   <Link
                     to={`/add-employee/${employee.id}`}

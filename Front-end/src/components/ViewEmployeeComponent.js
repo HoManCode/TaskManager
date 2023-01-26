@@ -30,7 +30,7 @@ function ViewEmployeeComponent() {
         </div>
         <div className="row">
           <label>Employee Email: </label>
-          <div> {employee.emailId} </div>
+          <div> {employee.email} </div>
         </div>
       </div>
     </div>
