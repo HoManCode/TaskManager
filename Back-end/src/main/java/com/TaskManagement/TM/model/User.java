@@ -10,10 +10,11 @@ import java.util.List;
 
 
 @Entity
-@Table(name="employees", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
-public class Employee implements UserDetails {
+@Table(name="users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
     @Column(name="first_name")
     private String firstName;
@@ -29,11 +30,11 @@ public class Employee implements UserDetails {
 
     private Role role;
 
-    public Employee() {
+    public User() {
 
     }
 
-    public Employee(String firstName, String lastName, String email) {
+    public User(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -95,7 +96,7 @@ public class Employee implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> roles = new ArrayList<>();
-
+        roles.add(new Authority(Role.ROLE_ADMIN));
         return roles;
     }
 

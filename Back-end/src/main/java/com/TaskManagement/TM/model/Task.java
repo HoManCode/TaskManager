@@ -3,7 +3,7 @@ package com.TaskManagement.TM.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 public class Task {
@@ -14,17 +14,17 @@ public class Task {
     @Column(name="story_points")
     private int storyPoints;
     @Column(name="due_date")
-    private Date dueDate;
+    private LocalDate dueDate;
     @ManyToOne(fetch= FetchType.LAZY)
     @JsonIgnore
-    private Employee assignee;
+    private User assignee;
     private String description;
 
     public Task() {
 
     }
 
-    public Task(int storyPoints, Date dueDate, Employee assignee, String description) {
+    public Task(int storyPoints, LocalDate dueDate, User assignee, String description) {
         this.storyPoints = storyPoints;
         this.dueDate = dueDate;
         this.assignee = assignee;
@@ -47,19 +47,19 @@ public class Task {
         this.storyPoints = storyPoints;
     }
 
-    public Date getDueDate() {
+    public LocalDate getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
 
-    public Employee getAssignee() {
+    public User getAssignee() {
         return assignee;
     }
 
-    public void setAssignee(Employee assignee) {
+    public void setAssignee(User assignee) {
         this.assignee = assignee;
     }
 

@@ -1,7 +1,7 @@
 package com.TaskManagement.TM.model;
 
 public enum Role {
-    ADMIN,
-    MANAGER,
-    EMPLOYEE
+    ROLE_ADMIN,
+    ROLE_MANAGER,
+    ROLE_EMPLOYEE
 }
