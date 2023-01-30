@@ -26,6 +26,8 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "assignee")
     private List<Task> tasks = new ArrayList<>();
 
+    private String username;
+
     private String password;
 
     private Role role;
@@ -34,10 +36,10 @@ public class User implements UserDetails {
 
     }
 
-    public User(String firstName, String lastName, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
+    public User(String username, String password, Role role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
     }
 
     public Long getId() {
@@ -84,6 +86,10 @@ public class User implements UserDetails {
         this.password = password;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public Role getRole() {
         return role;
     }
@@ -107,7 +113,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return getEmail();
+        return username;
     }
 
     @Override
