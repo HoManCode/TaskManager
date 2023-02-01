@@ -22,14 +22,15 @@ public class JWTGenerator {
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(expireDate)
-                .signWith(SignatureAlgorithm.ES256, SecurityConstants.JWT_SECRET)
+                .signWith(SignatureAlgorithm.HS512,SecurityConstants.JWT_SECRET)
                 .compact();
         return token;
     }
 
     public String getUsernameFromJWT(String token) {
-        Claims claims = Jwts.parser()
+        Claims claims = Jwts.parserBuilder()
                 .setSigningKey(SecurityConstants.JWT_SECRET)
+                .build()
                 .parseClaimsJws(token)
                 .getBody();
         return claims.getSubject();
