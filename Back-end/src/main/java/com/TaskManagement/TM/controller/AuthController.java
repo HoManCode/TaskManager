@@ -10,7 +10,10 @@ import com.TaskManagement.TM.security.JWTGenerator;
 import com.TaskManagement.TM.security.SecurityConstants;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,6 +33,9 @@ public class AuthController {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
     private JWTGenerator jwtGenerator;
+
+    @Value("${cookies.domain}")
+    private String domain;
 
     @Autowired
     public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository,
@@ -76,7 +82,15 @@ public class AuthController {
             return ResponseEntity.ok(false);
         }
     }
-
-
+    @GetMapping("logout")
+    public ResponseEntity<?> logout() {
+        ResponseCookie cookie = ResponseCookie.from("jwt","")
+                .domain(domain)
+                .path("/")
+                .maxAge(0)
+                .build();
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, cookie.toString()).body("ok");
+    }
 
 }
