@@ -1,5 +1,6 @@
 package com.TaskManagement.TM.security;
 
+import com.TaskManagement.TM.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -7,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationCredentialsNotF
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.Date;
 
@@ -43,5 +45,13 @@ public class JWTGenerator {
         } catch (Exception ex) {
             throw new AuthenticationCredentialsNotFoundException("JWT was expired or incorrect");
         }
+    }
+
+    public boolean ValidateUsersToken(String token, User user){
+        if(!StringUtils.hasText(token)){
+            return false;
+        }
+        final String username = getUsernameFromJWT(token);
+        return (user != null && username.equals(user.getUsername()) && validateToken(token));
     }
 }

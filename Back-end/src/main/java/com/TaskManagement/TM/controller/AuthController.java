@@ -8,12 +8,14 @@ import com.TaskManagement.TM.model.User;
 import com.TaskManagement.TM.repository.UserRepository;
 import com.TaskManagement.TM.security.JWTGenerator;
 import com.TaskManagement.TM.security.SecurityConstants;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -63,6 +65,18 @@ public class AuthController {
         String token = jwtGenerator.generateToken(authentication);
         return new ResponseEntity<>(new AuthResponseDTO(token),HttpStatus.OK);
     }
+
+    @GetMapping("validate")
+    public ResponseEntity<?> validateToken(@CookieValue(name = "jwt") String token,
+                                           @AuthenticationPrincipal User user){
+        try{
+            boolean isValidToken = jwtGenerator.ValidateUsersToken(token, user);
+            return ResponseEntity.ok(isValidToken);
+        } catch (ExpiredJwtException e){
+            return ResponseEntity.ok(false);
+        }
+    }
+
 
 
 }
