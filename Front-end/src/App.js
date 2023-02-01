@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CreateEmployeeComponent from "./components/CreateEmployeeComponent";
 import ViewEmployeeComponent from "./components/ViewEmployeeComponent";
 import LogIn from "./components/LogIn";
+import PrivateRoute from "./components/PrivateRoute"
 
 function App() {
   return (
@@ -14,17 +15,31 @@ function App() {
       <HeaderComponents />
       <div className="container">
         <Routes>
-          <Route path="/" element={<LogIn />} />
-          <Route path="/employees" element={<ListEmployeeComponent />} />
-          <Route path="/add-employee/" element={<CreateEmployeeComponent />} />
-          <Route
-            path="/add-employee/:id"
-            element={<CreateEmployeeComponent />}
+          <Route path="/login" element={<LogIn />} />
+        
+          <Route path="/employees" element={
+            <PrivateRoute>
+              <ListEmployeeComponent />
+            </PrivateRoute>} 
           />
-          <Route
-            path="/view-employee/:id"
-            element={<ViewEmployeeComponent />}
+        
+          <Route path="/add-employee/" element={
+            <PrivateRoute>
+              <CreateEmployeeComponent />
+            </PrivateRoute>} 
           />
+          <Route path="/add-employee/:id" element={
+            <PrivateRoute>
+              <CreateEmployeeComponent />
+            </PrivateRoute>}
+          />
+          <Route path="/view-employee/:id" element={
+            <PrivateRoute>
+              <ViewEmployeeComponent />
+            </PrivateRoute>}
+          />
+          
+          
         </Routes>
       </div>
       <FooterComponent />
