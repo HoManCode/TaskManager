@@ -1,5 +1,6 @@
 package com.TaskManagement.TM.model;
 
+import com.TaskManagement.TM.Enum.Role;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;

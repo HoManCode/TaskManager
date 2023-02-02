@@ -1,5 +1,6 @@
 package com.TaskManagement.TM.model;
 
+import com.TaskManagement.TM.Enum.TaskStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -19,6 +20,8 @@ public class Task {
     @JsonIgnore
     private User assignee;
     private String description;
+
+    private TaskStatus status;
 
     public Task() {
 
@@ -70,4 +73,8 @@ public class Task {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public TaskStatus getStatus() { return status; }
+
+    public void setStatus(TaskStatus status) { this.status = status; }
 }

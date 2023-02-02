@@ -1,4 +1,4 @@
-package com.TaskManagement.TM.model;
+package com.TaskManagement.TM.Enum;
 
 public enum Role {
     ROLE_ADMIN,

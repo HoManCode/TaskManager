@@ -3,7 +3,7 @@ package com.TaskManagement.TM.controller;
 import ch.qos.logback.core.util.Duration;
 import com.TaskManagement.TM.dto.LoginDto;
 import com.TaskManagement.TM.dto.RegisterDto;
-import com.TaskManagement.TM.model.Role;
+import com.TaskManagement.TM.Enum.Role;
 import com.TaskManagement.TM.model.User;
 import com.TaskManagement.TM.repository.UserRepository;
 import com.TaskManagement.TM.security.JWTGenerator;
