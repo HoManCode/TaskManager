@@ -9,12 +9,6 @@ const LogIn = () =>{
   const [errorMsg, setErrorMsg] = useState(null);
   const navigate = useNavigate();
 
-
-  const routeChange = () => {
-    let path = "/employees";
-    navigate(path);
-  };
-
   const sendLoginRequest = () => {
     setErrorMsg("");
 
@@ -37,12 +31,11 @@ const LogIn = () =>{
      } else {
       setErrorMsg("try again, somthing went wrong");
      }
-
     })
     .then((data) => {
       if(data) {
         user.setJwt(data);
-        navigate("/add-employees")
+        navigate("/Dashboard")
       }
     });
 
@@ -82,7 +75,7 @@ return (
               >
                 Login
               </button>{" "}
-              <button className="btn btn-danger" onClick={routeChange}>
+              <button className="btn btn-danger" onClick={() => navigate("/")}>
                 Cancel
               </button>
             </form>
