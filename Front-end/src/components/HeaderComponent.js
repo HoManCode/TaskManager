@@ -1,15 +1,12 @@
 import React from "react";
+import NavigationBar from "./NavigationBar";
 
 const HeaderComponents = () => {
   return (
     <div>
       <header>
         <nav className="navbar navbar-expand-md navbar-dark bg-dark p-3">
-          <div>
-            <a className="navbar-brand m-5" href="/">
-              Task Management System
-            </a>
-          </div>
+          <NavigationBar/>
         </nav>
       </header>
     </div>

@@ -8,6 +8,7 @@ import CreateEmployeeComponent from "./components/CreateEmployeeComponent";
 import ViewEmployeeComponent from "./components/ViewEmployeeComponent";
 import LogIn from "./components/LogIn";
 import PrivateRoute from "./components/PrivateRoute"
+import HomePage from "./components/HomePage"
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
       <div className="container">
         <Routes>
           <Route path="/login" element={<LogIn />} />
-        
+          <Route path="/" element={<HomePage />} />
           <Route path="/employees" element={
             <PrivateRoute>
               <ListEmployeeComponent />
