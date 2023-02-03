@@ -1,18 +1,28 @@
 package com.TaskManagement.TM.controller;
 
-import com.TaskManagement.TM.repository.TaskRepository;
+import com.TaskManagement.TM.model.Task;
+import com.TaskManagement.TM.model.User;
+import com.TaskManagement.TM.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/")
 @CrossOrigin(origins={"http://localhost:3000","http://localhost:8080"} , allowCredentials = "true")
 public class TaskController {
 
+
     @Autowired
-    TaskRepository taskRepository;
+    private TaskService taskService;
+
+    @PostMapping("tasks")
+    public ResponseEntity<?> createTask(@AuthenticationPrincipal User user) {
+        Task task  = taskService.create(user);
+
+        return ResponseEntity.ok(task);
+    }
 
 
 }
