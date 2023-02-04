@@ -17,12 +17,12 @@ const LogIn = () =>{
       password: password,
     }
 
-    fetch("api/auth/login", { 
+    fetch("http://localhost:8080/api/auth/login", { 
       headers: { 
         "Content-Type": "application/json"
        },
       method: "post",
-      body: JSON.stringify(reqBody),
+      //body: JSON.stringify(reqBody),
     })
     .then((response) => {
      if(response.status === 200 ) return response.text();
@@ -35,7 +35,7 @@ const LogIn = () =>{
     .then((data) => {
       if(data) {
         user.setJwt(data);
-        navigate("/Dashboard")
+        navigate("/dashboard")
       }
     });
 

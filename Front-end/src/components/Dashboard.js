@@ -1,34 +1,26 @@
 import React, { useEffect, useState } from "react";
 import EmployeeService from "../services/EmployeeService";
 import { Link, useNavigate } from "react-router-dom";
+import { useUser } from '../services/UserProvider';
+import ajax from "../services/ajax";
 
 const Dashboard = () => {
-  const [taskArray, setTaskArray] = useState([]);
+  const [tasks, setTasks] = useState(null);
   const navigate = useNavigate();
+  const user = useUser();
 
-  useEffect(() => {
-    getAllEmployee();
-  }, []);
+  
+  
 
-  function getAllEmployee() {
-    EmployeeService.getEmployees()
-      .then((res) => {
-        setTaskArray(res.data);
-        console.log(res);
-      })
-      .catch((e) => console.log(e));
-    }
-
-  const toVeiwEmployee = (id) => {
-    let path = `/view-employee/${id}`;
-    navigate(path);
+  const createTask = () => {
+    ajax("api/task","POST",user.jwt).then((task) =>{
+      navigate(`/tasks/${task.id}`);
+    })
   };
 
   return (
     <div className="container">
-      <a href="/add-employee">
-        <button className="btn btn-primary mb-2 mt-3">Create New Task</button>
-      </a>
+        <button className="btn btn-primary mb-2 mt-3"onClick={() => createTask()}>Create New Task</button>
       <h2 className="text-center">My Tasks</h2>
 
       <div className="row">
@@ -42,30 +34,20 @@ const Dashboard = () => {
             </tr>
           </thead>
           <tbody>
-            {taskArray.map((employee) => (
-              <tr key={employee.id}>
-                <td> {employee.firstName} </td>
-                <td> {employee.lastName} </td>
-                <td> {employee.email} </td>
-                <td>
-                  <Link
-                    to={`/add-employee/${employee.id}`}
+            <td>
+                <button
+                    style={{ marginLeft: "10px" }}
                     className="btn btn-info"
-                    href=""
                   >
                     Update
-                  </Link>
-                
+                  </button>
                   <button
                     style={{ marginLeft: "10px" }}
-                    onClick={() => toVeiwEmployee(employee.id)}
                     className="btn btn-info"
                   >
                     View
-                  </button>
-                </td>
-              </tr>
-            ))}
+                </button>
+            </td>
           </tbody>
         </table>
       </div>
