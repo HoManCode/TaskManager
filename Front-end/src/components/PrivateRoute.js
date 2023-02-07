@@ -10,7 +10,7 @@ const PrivateRoute = (props) => {
     const { children } = props;
 
     if( user && user.jwt ){
-        ajax(`/api/auth/validate`,"get",user.jwt)
+        ajax(`api/auth/validate`,"get",user.jwt)
         .then((isValid) => {
             setIsValid(isValid);
             setIsLoaded(false);

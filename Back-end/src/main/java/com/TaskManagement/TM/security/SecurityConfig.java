@@ -19,7 +19,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfig {
 
+    @Autowired
     private JwtAuthEntryPoint authEntryPoint;
+    @Autowired
     private CustomUserDetailsService userDetailsService;
     @Autowired
     public SecurityConfig(CustomUserDetailsService userDetailsService, JwtAuthEntryPoint authEntryPoint) {
@@ -31,14 +33,16 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
+                .cors().disable()
                 .exceptionHandling()
                 .authenticationEntryPoint(authEntryPoint)
-                .and()
+                .disable()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/auth/**").permitAll()
+                .antMatchers("/api").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();

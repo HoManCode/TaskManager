@@ -1,17 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../services/UserProvider";
 import Cookies from "js-cookie";
 
-const Login = () =>{
+const Signup = () =>{
   const user = useUser();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMsg, setErrorMsg] = useState(null);
+  const [firstName, setfirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const navigate = useNavigate();
 
-  const sendLoginRequest = () => {
-    setErrorMsg("");
+  useEffect(()=>{
+    if(user.jwt)navigate("/dashboard");
+  },[user]);
+
+  const registerAndLoginUser = () => {
     const reqBody = {
       username: username,
       password: password,
@@ -44,9 +48,27 @@ return (
     <div className="container">
       <div className="row">
         <div className="card col-md-6 offset-md-3">
-          <h2 className="text-center">Welcome</h2>
+          <h2 className="text-center">Signup</h2>
           <div className="card-body">
             <form>
+              <div className="form-group mb-2">
+                <input
+                  className="form-control"
+                  value={firstName}
+                  onChange={(e) => setfirstName(e.target.value)}
+                  type="text"
+                  placeholder="First Name"
+                />
+              </div>
+              <div className="form-group mb-2">
+                <input
+                  className="form-control"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  type="text"
+                  placeholder="Last Name"
+                />
+              </div>
               <div className="form-group mb-2">
                 <input
                   className="form-control"
@@ -67,13 +89,13 @@ return (
               </div>
               <button
                 disabled={username.length === 0 || password.length === 0}
-                onClick={() => sendLoginRequest()}
+                onClick={() => registerAndLoginUser()}
                 className="btn btn-success"
               >
-                Login
+                Register
               </button>{" "}
-              <button className="btn btn-danger" onClick={() => navigate("/")}>
-                Cancel
+              <button className="btn btn-danger" onClick={() => navigate("/login")}>
+                Exit
               </button>
             </form>
           </div>
@@ -83,4 +105,4 @@ return (
   </div>
   );
 };
-export default Login;
+export default Signup;
