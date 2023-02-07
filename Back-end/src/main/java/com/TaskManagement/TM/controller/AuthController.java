@@ -6,7 +6,7 @@ import com.TaskManagement.TM.dto.RegisterDto;
 import com.TaskManagement.TM.Enum.Role;
 import com.TaskManagement.TM.model.User;
 import com.TaskManagement.TM.repository.UserRepository;
-import com.TaskManagement.TM.security.JWTGenerator;
+import com.TaskManagement.TM.util.JwtUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,18 +31,18 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
-    private JWTGenerator jwtGenerator;
+    private JwtUtil jwtUtil;
 
     @Value("${cookies.domain}")
     private String domain;
 
     @Autowired
     public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository,
-                          PasswordEncoder passwordEncoder, JWTGenerator jwtGenerator) {
+                          PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.jwtGenerator = jwtGenerator;
+        this.jwtUtil = jwtUtil;
     }
 
     @PostMapping("auth/register")
@@ -68,7 +68,7 @@ public class AuthController {
                         loginDto.getUsername(),
                         loginDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = jwtGenerator.generateToken(authentication);
+        String token = jwtUtil.generateToken(authentication);
 
         ResponseCookie cookie = ResponseCookie.from("jwt", token)
                 .domain(domain)
@@ -87,7 +87,7 @@ public class AuthController {
     public ResponseEntity<?> validateToken(@CookieValue(name = "jwt") String token,
                                            @AuthenticationPrincipal User user){
         try{
-            boolean isValidToken = jwtGenerator.ValidateUsersToken(token, user);
+            boolean isValidToken = jwtUtil.ValidateUsersToken(token, user);
             return ResponseEntity.ok(isValidToken);
         } catch (ExpiredJwtException e){
             return ResponseEntity.ok(false);

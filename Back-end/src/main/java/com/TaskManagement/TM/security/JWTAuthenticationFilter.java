@@ -1,5 +1,6 @@
 package com.TaskManagement.TM.security;
 
+import com.TaskManagement.TM.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,7 +17,7 @@ import java.io.IOException;
 
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
-    private JWTGenerator tokenGenerator;
+    private JwtUtil jwtUtil;
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
@@ -26,8 +27,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         String token = getJWTFromRequest(request);
-        if(StringUtils.hasText(token) && tokenGenerator.validateToken(token)) {
-            String username = tokenGenerator.getUsernameFromJWT(token);
+        if(StringUtils.hasText(token) && jwtUtil.validateToken(token)) {
+            String username = jwtUtil.getUsernameFromJWT(token);
 
             UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null,
