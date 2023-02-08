@@ -8,11 +8,13 @@ import { UserProvider } from "./services/UserProvider";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
+  <React.StrictMode>
   <UserProvider>
-    <React.StrictMode>
+    
       <App />
-    </React.StrictMode>
+   
   </UserProvider>
+  </React.StrictMode>
   
 );
 

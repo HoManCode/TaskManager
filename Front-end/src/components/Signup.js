@@ -23,7 +23,7 @@ const Signup = () =>{
       password: password,
     }
 
-    fetch("/api/users/register", { 
+    fetch("api/users/register", { 
       headers: { 
         "Content-Type": "application/json"
        },

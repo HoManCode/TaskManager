@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../services/UserProvider";
-import Cookies from "js-cookie";
+
 
 const Login = () =>{
   const user = useUser();
@@ -25,15 +25,20 @@ const Login = () =>{
       body: JSON.stringify(reqBody),
     })
     .then((response) => {
-      if (response.status === 200)
-        return Promise.all([response.json(), response.headers]);
-      else return Promise.reject("Invalid login attempt");
+      if (response.status === 200) return response.text();
+      else if (response.status === 401 || response.status === 403) {
+        setErrorMsg("Invalid username or password");
+      } else {
+        setErrorMsg(
+          "Something went wrong"
+        );
+      }
     })
-    .then(([body, headers]) => {
-      user.setJwt(Cookies.get("jwt"));
-    })
-    .catch((message) => {
-      alert(message);
+    .then((data) => {
+      if (data) {
+        user.setJwt(data);
+        navigate("/dashboard");
+      }
     });
 
   }
