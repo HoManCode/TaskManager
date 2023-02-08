@@ -8,6 +8,8 @@ import com.TaskManagement.TM.model.User;
 import com.TaskManagement.TM.repository.UserRepository;
 import com.TaskManagement.TM.util.JwtUtil;
 import io.jsonwebtoken.ExpiredJwtException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = {"http://localhost:3000","http://localhost:8080"} , allowCredentials = "true")
 @RequestMapping("/api/auth")
 public class AuthController {
+
 
     private AuthenticationManager authenticationManager;
     private UserRepository userRepository;
@@ -63,6 +66,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDto loginDto){
         try{
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginDto.getUsername(),
