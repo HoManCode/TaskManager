@@ -17,11 +17,13 @@ const Signup = () =>{
 
   const registerAndLoginUser = () => {
     const reqBody = {
+      firstName: firstName,
+      lastName: lastName,
       username: username,
       password: password,
     }
 
-    fetch("api/auth/login", { 
+    fetch("/api/users/register", { 
       headers: { 
         "Content-Type": "application/json"
        },

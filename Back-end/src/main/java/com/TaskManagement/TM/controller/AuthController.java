@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = {"http://localhost:3000","http://localhost:8080"} , allowCredentials = "true")
-@RequestMapping("/api/")
+@RequestMapping("/api/auth")
 public class AuthController {
 
     private AuthenticationManager authenticationManager;
@@ -45,7 +45,7 @@ public class AuthController {
         this.jwtUtil = jwtUtil;
     }
 
-    @PostMapping("auth/register")
+    @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterDto registerDto){
         if (userRepository.existsByUsername(registerDto.getUsername())){
             return new ResponseEntity<>("Username is taken!!!!", HttpStatus.BAD_REQUEST);
@@ -60,7 +60,7 @@ public class AuthController {
         return new ResponseEntity<>("User registered success!!", HttpStatus.OK);
     }
 
-    @PostMapping("auth/login")
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDto loginDto){
         try{
         Authentication authentication = authenticationManager.authenticate(
@@ -83,7 +83,7 @@ public class AuthController {
         }
     }
 
-    @GetMapping("auth/validate")
+    @GetMapping("/validate")
     public ResponseEntity<?> validateToken(@CookieValue(name = "jwt") String token,
                                            @AuthenticationPrincipal User user){
         try{
@@ -93,7 +93,7 @@ public class AuthController {
             return ResponseEntity.ok(false);
         }
     }
-    @GetMapping("auth/logout")
+    @GetMapping("/logout")
     public ResponseEntity<?> logout() {
         ResponseCookie cookie = ResponseCookie.from("jwt","")
                 .domain(domain)
