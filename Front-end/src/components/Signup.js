@@ -11,11 +11,9 @@ const Signup = () =>{
   const [lastName, setLastName] = useState("");
   const navigate = useNavigate();
 
-  useEffect(()=>{
-    if(user.jwt)navigate("/dashboard");
-  },[user]);
 
-  const registerAndLoginUser = () => {
+  const registerAndLoginUser = (e) => {
+    e.preventDefault();
     const reqBody = {
       firstName: firstName,
       lastName: lastName,
@@ -37,6 +35,7 @@ const Signup = () =>{
     })
     .then(([body, headers]) => {
       user.setJwt(Cookies.get("jwt"));
+      navigate("/dashboard");
     })
     .catch((message) => {
       alert(message);
@@ -91,7 +90,7 @@ return (
               </div>
               <button
                 disabled={username.length === 0 || password.length === 0}
-                onClick={() => registerAndLoginUser()}
+                onClick={(e) => registerAndLoginUser(e)}
                 className="btn btn-success"
               >
                 Register
