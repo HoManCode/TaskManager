@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../services/UserProvider";
 
@@ -10,7 +10,10 @@ const Login = () =>{
   const [errorMsg, setErrorMsg] = useState(null);
   const navigate = useNavigate();
 
-  const sendLoginRequest = () => {
+  
+
+  const sendLoginRequest = (e) => {
+    e.preventDefault();
     setErrorMsg("");
     const reqBody = {
       username: username,
@@ -70,9 +73,16 @@ return (
                   placeholder="Password"
                 />
               </div>
+              {errorMsg ? (
+              <div className="form-group mb-2">
+                {errorMsg}
+              </div>
+              ) : (
+              <></>
+              )}
               <button
                 disabled={username.length === 0 || password.length === 0}
-                onClick={() => sendLoginRequest()}
+                onClick={(e) => sendLoginRequest(e)}
                 className="btn btn-success"
               >
                 Login
