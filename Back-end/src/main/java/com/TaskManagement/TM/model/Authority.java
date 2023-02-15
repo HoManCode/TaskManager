@@ -9,10 +9,8 @@ import javax.persistence.*;
 public class Authority implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user;
     private Role role;
 

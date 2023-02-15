@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import EmployeeService from "../services/EmployeeService";
+import EmployeeService from "../services/UserService";
 import { Link, useNavigate } from "react-router-dom";
 import { useUser } from '../services/UserProvider';
 import ajax from "../services/ajax";

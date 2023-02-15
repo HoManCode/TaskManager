@@ -1,66 +1,66 @@
 import React, { useEffect, useState } from "react";
-import EmployeeService from "../services/EmployeeService";
+import UserService from "../services/UserService";
 import { Link, useNavigate } from "react-router-dom";
 
-const ListEmployeeComponent = () => {
-  const [employeeArray, setEmployeeArray] = useState([]);
+const ListUserComponent = () => {
+  const [UserArray, setUserArray] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    getAllEmployee();
+    getAllUser();
   }, []);
 
-  function getAllEmployee() {
-    EmployeeService.getEmployees()
+  function getAllUser() {
+    UserService.getUsers()
       .then((res) => {
-        setEmployeeArray(res.data);
+        setUserArray(res.data);
         console.log(res);
       })
       .catch((e) => console.log(e));
   }
 
-  function deleteEmployee(e, id) {
+  function deleteUser(e, id) {
     e.preventDefault();
-    EmployeeService.deleteEmployeeById(id)
+    UserService.deleteUserById(id)
       .then(
-        setEmployeeArray(
-          employeeArray.filter((employee) => employee.email === id)
+        setUserArray(
+          UserArray.filter((User) => User.email === id)
         )
       )
       .catch((e) => console.log(e));
   }
 
-  const toVeiwEmployee = (id) => {
-    let path = `/view-employee/${id}`;
+  const toVeiwUser = (id) => {
+    let path = `/view-User/${id}`;
     navigate(path);
   };
 
   return (
     <div className="container">
-      <a href="/add-employee">
-        <button className="btn btn-primary mb-2 mt-3">Add Employee</button>
+      <a href="/add-User">
+        <button className="btn btn-primary mb-2 mt-3">Add User</button>
       </a>
-      <h2 className="text-center">Employees List</h2>
+      <h2 className="text-center">Users List</h2>
 
       <div className="row">
         <table className="table table-striped tabled-bordered">
           <thead>
             <tr>
-              <th> Employee First Name</th>
-              <th> Employee Last Name</th>
-              <th> Employee Email</th>
+              <th> User First Name</th>
+              <th> User Last Name</th>
+              <th> User Email</th>
               <th> Actions</th>
             </tr>
           </thead>
           <tbody>
-            {employeeArray.map((employee) => (
-              <tr key={employee.id}>
-                <td> {employee.firstName} </td>
-                <td> {employee.lastName} </td>
-                <td> {employee.email} </td>
+            {UserArray.map((User) => (
+              <tr key={User.id}>
+                <td> {User.firstName} </td>
+                <td> {User.lastName} </td>
+                <td> {User.email} </td>
                 <td>
                   <Link
-                    to={`/add-employee/${employee.id}`}
+                    to={`/add-User/${User.id}`}
                     className="btn btn-info"
                     href=""
                   >
@@ -68,14 +68,14 @@ const ListEmployeeComponent = () => {
                   </Link>
                   <button
                     style={{ marginLeft: "10px" }}
-                    onClick={(e) => deleteEmployee(e, employee.id)}
+                    onClick={(e) => deleteUser(e, User.id)}
                     className="btn btn-danger"
                   >
                     Delete
                   </button>
                   <button
                     style={{ marginLeft: "10px" }}
-                    onClick={() => toVeiwEmployee(employee.id)}
+                    onClick={() => toVeiwUser(User.id)}
                     className="btn btn-info"
                   >
                     View
@@ -89,4 +89,4 @@ const ListEmployeeComponent = () => {
     </div>
   );
 };
-export default ListEmployeeComponent;
+export default ListUserComponent;

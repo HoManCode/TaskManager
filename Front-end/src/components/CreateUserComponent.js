@@ -1,31 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import EmployeeService from "../services/EmployeeService";
+import UserService from "../services/UserService";
 
-const CreateEmployeeComponent = () => {
+const CreateUserComponent = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const employeeData = { firstName, lastName, email };
+  const UserData = { firstName, lastName, email };
 
-  function saveEmployee(e) {
+  function saveUser(e) {
     e.preventDefault();
 
     if (
-      employeeData.firstName !== "" &&
-      employeeData.lastName !== "" &&
-      employeeData.email !== ""
+      UserData.firstName !== "" &&
+      UserData.lastName !== "" &&
+      UserData.email !== ""
     ) {
       if (id) {
-        EmployeeService.updateEmployee(id, employeeData)
-          .then(navigate("/employees"))
+        UserService.updateUser(id, UserData)
+          .then(navigate("/Users"))
           .catch((e) => console.log(e));
       } else {
-        EmployeeService.saveEmployee(employeeData)
-          .then(navigate("/employees"))
+        UserService.saveUser(UserData)
+          .then(navigate("/Users"))
           .catch((e) => console.log(e));
       }
     } else {
@@ -35,15 +35,15 @@ const CreateEmployeeComponent = () => {
 
   function tile() {
     if (id) {
-      return "Update Employee";
+      return "Update User";
     } else {
-      return "Add Employee";
+      return "Add User";
     }
   }
 
   useEffect(() => {
     if (id) {
-      EmployeeService.getEmployeeById(id)
+      UserService.getUserById(id)
         .then((res) => {
           setFirstName(res.data.firstName);
           setLastName(res.data.lastName);
@@ -54,7 +54,7 @@ const CreateEmployeeComponent = () => {
   }, []);
 
   const routeChange = () => {
-    let path = "/employees";
+    let path = "/Users";
     navigate(path);
   };
 
@@ -94,7 +94,7 @@ const CreateEmployeeComponent = () => {
                   />
                 </div>
                 <button
-                  onClick={(e) => saveEmployee(e)}
+                  onClick={(e) => saveUser(e)}
                   className="btn btn-success"
                 >
                   Save
@@ -111,4 +111,4 @@ const CreateEmployeeComponent = () => {
   );
 };
 
-export default CreateEmployeeComponent;
+export default CreateUserComponent;

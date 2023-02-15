@@ -1,11 +1,11 @@
 import "./App.css";
 import React from "react";
-import ListEmployeeComponent from "./components/ListEmployeeComponent";
+import ListUserComponent from "./components/ListUserComponent";
 import HeaderComponents from "./components/HeaderComponent";
 import FooterComponent from "./components/FooterComponents";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import CreateEmployeeComponent from "./components/CreateEmployeeComponent";
-import ViewEmployeeComponent from "./components/ViewEmployeeComponent";
+import CreateUserComponent from "./components/CreateUserComponent";
+import ViewUserComponent from "./components/ViewUserComponent";
 import Login from "./components/Login";
 import PrivateRoute from "./components/PrivateRoute"
 import HomePage from "./components/HomePage"
@@ -26,25 +26,25 @@ function App() {
               <Dashboard />
             </PrivateRoute>} 
           />
-          <Route path="/employees" element={
+          <Route path="/Users" element={
             <PrivateRoute>
-              <ListEmployeeComponent />
+              <ListUserComponent />
             </PrivateRoute>} 
           />
         
-          <Route path="/add-employee/" element={
+          <Route path="/add-User/" element={
             <PrivateRoute>
-              <CreateEmployeeComponent />
+              <CreateUserComponent />
             </PrivateRoute>} 
           />
-          <Route path="/add-employee/:id" element={
+          <Route path="/add-User/:id" element={
             <PrivateRoute>
-              <CreateEmployeeComponent />
+              <CreateUserComponent />
             </PrivateRoute>}
           />
-          <Route path="/view-employee/:id" element={
+          <Route path="/view-User/:id" element={
             <PrivateRoute>
-              <ViewEmployeeComponent />
+              <ViewUserComponent />
             </PrivateRoute>}
           />
           
