@@ -16,8 +16,7 @@ public class Task {
     private int storyPoints;
     @Column(name="due_date")
     private LocalDate dueDate;
-    @ManyToOne(fetch= FetchType.LAZY)
-    @JsonIgnore
+    @ManyToOne(optional = false,cascade = CascadeType.ALL)
     private User assignee;
     private String description;
 

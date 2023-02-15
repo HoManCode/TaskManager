@@ -11,7 +11,7 @@ import java.util.List;
 
 
 @Entity
-@Table(name="users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
+@Table(name="users")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,9 +23,6 @@ public class User implements UserDetails {
     private String lastName;
     @Column(name="email")
     private String email;
-
-    @OneToMany(mappedBy = "assignee")
-    private List<Task> tasks = new ArrayList<>();
 
     private String username;
 
@@ -73,14 +70,6 @@ public class User implements UserDetails {
 
     public void setEmail(String emailId) {
         this.email = emailId;
-    }
-
-    public List<Task> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
     }
 
     public void setPassword(String password) {

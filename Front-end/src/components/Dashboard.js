@@ -13,8 +13,9 @@ const Dashboard = () => {
   
 
   const createTask = () => {
-    ajax("api/task","POST",user.jwt).then((task) =>{
-      navigate(`/tasks/${task.id}`);
+    ajax("api/tasks","POST",user.jwt).then((task) =>{
+      //navigate(`/tasks/${task.id}`);
+      console.log(task);
     })
   };
 

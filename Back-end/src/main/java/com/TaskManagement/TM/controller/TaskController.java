@@ -9,7 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api/tasks")
 @CrossOrigin(origins={"http://localhost:3000","http://localhost:8080"} , allowCredentials = "true")
 public class TaskController {
 
@@ -17,7 +17,7 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
-    @PostMapping("tasks")
+    @PostMapping("")
     public ResponseEntity<?> createTask(@AuthenticationPrincipal User user) {
         Task task  = taskService.create(user);
 
