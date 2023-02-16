@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import EmployeeService from "../services/UserService";
+import TaskService from "../services/TaskService";
 import { Link, useNavigate } from "react-router-dom";
 import { useUser } from '../services/UserProvider';
-import ajax from "../services/ajax";
+
 
 const Dashboard = () => {
   const [tasks, setTasks] = useState(null);
@@ -13,10 +13,9 @@ const Dashboard = () => {
   
 
   const createTask = () => {
-    ajax("api/tasks","POST",user.jwt).then((task) =>{
-      //navigate(`/tasks/${task.id}`);
-      console.log(task);
-    })
+    TaskService.create(user.jwt);
+    
+    //navigate(`/tasks/${task.id}`);
   };
 
   return (
