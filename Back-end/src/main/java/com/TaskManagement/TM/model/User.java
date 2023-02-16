@@ -1,13 +1,9 @@
 package com.TaskManagement.TM.model;
 
-import com.TaskManagement.TM.Enum.Role;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 
 @Entity
@@ -15,29 +11,27 @@ import java.util.List;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
     private Long id;
-    @Column(name="first_name")
     private String firstName;
-    @Column(name="last_name")
     private String lastName;
-    @Column(name="email")
+
     private String email;
 
     private String username;
 
     private String password;
 
-    private Role role;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    private Set<Authorities> authorities = new HashSet<>();
 
     public User() {
 
     }
 
-    public User(String username, String password, Role role) {
+    public User(String username, String password, Set<Authorities> authorities) {
         this.username = username;
         this.password = password;
-        this.role = role;
+        this.authorities = authorities;
     }
 
     public Long getId() {
@@ -80,21 +74,15 @@ public class User implements UserDetails {
         this.username = username;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> roles = new ArrayList<>();
-        roles.add(new Authority(Role.ROLE_ADMIN));
-        return roles;
+    public Set<Authorities> getAuthorities() {
+        return authorities;
     }
+
+    public void setAuthorities(Set<Authorities> authorities) {
+        this.authorities = authorities;
+    }
+
 
     @Override
     public String getPassword() {

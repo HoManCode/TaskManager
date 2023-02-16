@@ -1,6 +1,6 @@
 package com.TaskManagement.TM.Enum;
 
-public enum Role {
+public enum Authority {
     ROLE_ADMIN,
     ROLE_MANAGER,
     ROLE_EMPLOYEE

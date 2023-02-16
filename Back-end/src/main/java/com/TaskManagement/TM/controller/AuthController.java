@@ -2,14 +2,12 @@ package com.TaskManagement.TM.controller;
 
 import ch.qos.logback.core.util.Duration;
 import com.TaskManagement.TM.dto.LoginDto;
-import com.TaskManagement.TM.dto.RegisterDto;
-import com.TaskManagement.TM.Enum.Role;
+import com.TaskManagement.TM.dto.UserDto;
 import com.TaskManagement.TM.model.User;
 import com.TaskManagement.TM.repository.UserRepository;
+import com.TaskManagement.TM.service.UserService;
 import com.TaskManagement.TM.util.JwtUtil;
 import io.jsonwebtoken.ExpiredJwtException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -22,45 +20,54 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @RestController
 @CrossOrigin(origins = {"http://localhost:3000","http://localhost:8080"} , allowCredentials = "true")
 @RequestMapping("/api/auth")
 public class AuthController {
 
-
+    @Autowired
     private AuthenticationManager authenticationManager;
-    private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserService userService;
+    @Autowired
     private JwtUtil jwtUtil;
+    @Autowired
+    private UserRepository userRepository;
 
     @Value("${cookies.domain}")
     private String domain;
 
-    @Autowired
-    public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository,
-                          PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
-        this.authenticationManager = authenticationManager;
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtUtil = jwtUtil;
-    }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterDto registerDto){
-        if (userRepository.existsByUsername(registerDto.getUsername())){
+    public ResponseEntity<?> register(@RequestBody UserDto userDto){
+        if (userRepository.existsByUsername(userDto.getUsername())){
             return new ResponseEntity<>("Username is taken!!!!", HttpStatus.BAD_REQUEST);
         }
-        User user = new User();
-        user.setUsername(registerDto.getUsername());
-        user.setPassword(passwordEncoder.encode((registerDto.getPassword())));
+        userService.create(userDto);
 
-        user.setRole(Role.ROLE_EMPLOYEE);
-
-        userRepository.save(user);
-        return new ResponseEntity<>("User registered success!!", HttpStatus.OK);
+        try{
+            Authentication authentication = authenticationManager
+                    .authenticate(
+                            new UsernamePasswordAuthenticationToken(
+                                    userDto.getUsername(),userDto.getPassword()
+                            )
+                    );
+            User user = (User) authentication.getPrincipal();
+            user.setPassword(null);
+            return ResponseEntity.ok()
+                    .header(
+                            HttpHeaders.AUTHORIZATION,
+                            jwtUtil.generateToken(user)
+                    )
+                    .body(user);
+        } catch (BadCredentialsException ex) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 
     @PostMapping("/login")

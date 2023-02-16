@@ -22,17 +22,6 @@ public class Task {
 
     private TaskStatus status;
 
-    public Task() {
-
-    }
-
-    public Task(int storyPoints, LocalDate dueDate, User assignee, String description) {
-        this.storyPoints = storyPoints;
-        this.dueDate = dueDate;
-        this.assignee = assignee;
-        this.description = description;
-    }
-
     public Long getId() {
         return id;
     }
