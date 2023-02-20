@@ -43,33 +43,6 @@ public class AuthController {
     private String domain;
 
 
-    @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody UserDto userDto){
-        if (userRepository.existsByUsername(userDto.getUsername())){
-            return new ResponseEntity<>("Username is taken!!!!", HttpStatus.BAD_REQUEST);
-        }
-        userService.create(userDto);
-
-        try{
-            Authentication authentication = authenticationManager
-                    .authenticate(
-                            new UsernamePasswordAuthenticationToken(
-                                    userDto.getUsername(),userDto.getPassword()
-                            )
-                    );
-            User user = (User) authentication.getPrincipal();
-            user.setPassword(null);
-            return ResponseEntity.ok()
-                    .header(
-                            HttpHeaders.AUTHORIZATION,
-                            jwtUtil.generateToken(user)
-                    )
-                    .body(user);
-        } catch (BadCredentialsException ex) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-    }
-
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDto loginDto){
         try{

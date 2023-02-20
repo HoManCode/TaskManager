@@ -7,6 +7,9 @@ import com.TaskManagement.TM.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+import java.util.Set;
+
 @Service
 public class TaskService {
     @Autowired
@@ -15,8 +18,11 @@ public class TaskService {
 
         Task task = new Task();
         task.setStatus(TaskStatus.BACKLOG);
-        task.setAssignee(user);
+        task.setUsername(user.getUsername());
 
         return taskRepository.save(task);
     }
+
+
+
 }

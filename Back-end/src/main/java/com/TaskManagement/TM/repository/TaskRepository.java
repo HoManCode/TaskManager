@@ -9,5 +9,5 @@ import java.util.Set;
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
-    Set<Task> findByAssignee(User assignee);
+
 }

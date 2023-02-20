@@ -13,6 +13,7 @@ const Dashboard = () => {
   
 
   const createTask = () => {
+    console.log(user.jwt);
     TaskService.create(user.jwt);
     
     //navigate(`/tasks/${task.id}`);
