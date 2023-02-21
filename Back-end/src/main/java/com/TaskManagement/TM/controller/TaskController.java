@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Set;
+
 @RestController
 @RequestMapping("/api/tasks")
 @CrossOrigin(origins={"http://localhost:3000","http://localhost:8080"} , allowCredentials = "true")
@@ -26,6 +28,13 @@ public class TaskController {
         Task task  = taskService.create(user);
 
         return ResponseEntity.ok(task);
+    }
+
+    @GetMapping("")
+    public ResponseEntity<?> getAllTasks(@AuthenticationPrincipal User user){
+        Set<Task> tasksByUsername = taskService.findByUsername(user.getUsername());
+
+        return ResponseEntity.ok(tasksByUsername);
     }
 
 

@@ -5,17 +5,24 @@ import { useUser } from '../services/UserProvider';
 
 
 const Dashboard = () => {
-  const [tasks, setTasks] = useState(null);
+  const [tasks, setTasks] = useState([]);
   const navigate = useNavigate();
   const user = useUser();
 
+  useEffect(() => {
+    TaskService.getTasks(user.jwt).then((tasks) =>{
+      setTasks(tasks);
+    });
+    if (!user.jwt) {
+      console.warn("No valid jwt found, redirecting to login page");
+      navigate("/login");
+    }
+  }, [user.jwt]);
   
   
 
   const createTask = () => {
-    console.log(user.jwt);
     TaskService.create(user.jwt);
-    
     //navigate(`/tasks/${task.id}`);
   };
 
@@ -35,6 +42,12 @@ const Dashboard = () => {
             </tr>
           </thead>
           <tbody>
+          {tasks.map((task) => (
+              <tr key={task.id}>
+                <td> {task.id} </td>
+                <td> {task.id} </td>
+                <td> {task.id} </td>
+                <td> {task.id} </td>
             <td>
                 <button
                     style={{ marginLeft: "10px" }}
@@ -49,6 +62,8 @@ const Dashboard = () => {
                     View
                 </button>
             </td>
+            </tr>
+            ))}
           </tbody>
         </table>
       </div>
