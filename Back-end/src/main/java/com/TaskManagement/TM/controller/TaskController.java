@@ -1,5 +1,6 @@
 package com.TaskManagement.TM.controller;
 
+import com.TaskManagement.TM.dto.TaskDto;
 import com.TaskManagement.TM.model.Task;
 import com.TaskManagement.TM.model.User;
 import com.TaskManagement.TM.service.TaskService;
@@ -24,8 +25,8 @@ public class TaskController {
     private JwtUtil jwtUtil;
 
     @PostMapping("")
-    public ResponseEntity<?> createTask(@AuthenticationPrincipal User user) {
-        Task task  = taskService.create(user);
+    public ResponseEntity<?> createTask(@AuthenticationPrincipal User user, @RequestBody TaskDto taskDto) {
+        Task task  = taskService.create(user,taskDto);
 
         return ResponseEntity.ok(task);
     }

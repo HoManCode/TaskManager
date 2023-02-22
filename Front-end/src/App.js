@@ -5,6 +5,7 @@ import HeaderComponents from "./components/HeaderComponent";
 import FooterComponent from "./components/FooterComponents";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CreateUserComponent from "./components/CreateUserComponent";
+import CreateTaskComponent from "./components/CreateTaskComponent";
 import ViewUserComponent from "./components/ViewUserComponent";
 import Login from "./components/Login";
 import PrivateRoute from "./components/PrivateRoute"
@@ -47,6 +48,17 @@ function App() {
               <ViewUserComponent />
             </PrivateRoute>}
           />
+          <Route path="/add-Task/:id" element={
+            //<PrivateRoute>
+              <CreateTaskComponent />
+            //</PrivateRoute>}
+          }/>
+
+          <Route path="/add-Task" element={
+            //<PrivateRoute>
+              <CreateTaskComponent />
+            //</PrivateRoute>}
+          }/>
           
           
         </Routes>

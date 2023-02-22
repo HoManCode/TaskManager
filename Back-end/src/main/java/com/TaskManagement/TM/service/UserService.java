@@ -34,4 +34,5 @@ public class UserService {
         authority.setUser(user);
         authorityRepository.save(authority);
     }
+
 }

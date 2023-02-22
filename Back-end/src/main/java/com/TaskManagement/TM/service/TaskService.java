@@ -1,6 +1,7 @@
 package com.TaskManagement.TM.service;
 
 import com.TaskManagement.TM.Enum.TaskStatus;
+import com.TaskManagement.TM.dto.TaskDto;
 import com.TaskManagement.TM.model.Task;
 import com.TaskManagement.TM.model.User;
 import com.TaskManagement.TM.repository.TaskRepository;
@@ -15,10 +16,13 @@ import java.util.Set;
 public class TaskService {
     @Autowired
     private TaskRepository taskRepository;
-    public Task create(User user) {
+    public Task create(User user, TaskDto taskDto) {
 
         Task task = new Task();
-        task.setStatus(TaskStatus.BACKLOG);
+        task.setDescription(taskDto.getDescription());
+        task.setDueDate(taskDto.getDueDate());
+        task.setStoryPoints(taskDto.getStoryPoints());
+        task.setStatus(taskDto.getStatus());
         task.setUsername(user.getUsername());
 
         return taskRepository.save(task);

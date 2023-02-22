@@ -19,16 +19,11 @@ const Dashboard = () => {
     }
   }, [user.jwt]);
   
-  
-
-  const createTask = () => {
-    TaskService.create(user.jwt);
-    //navigate(`/tasks/${task.id}`);
-  };
-
   return (
     <div className="container">
-        <button className="btn btn-primary mb-2 mt-3"onClick={() => createTask()}>Create New Task</button>
+      <a href="/add-Task">
+        <button className="btn btn-primary mb-2 mt-3" >Create New Task</button>
+      </a>
       <h2 className="text-center">My Tasks</h2>
 
       <div className="row">
@@ -39,15 +34,17 @@ const Dashboard = () => {
               <th> Task Description</th>
               <th> Task Due Date</th>
               <th> Task Story Points</th>
+              <th> Task Status</th>
             </tr>
           </thead>
           <tbody>
           {tasks.map((task) => (
               <tr key={task.id}>
                 <td> {task.id} </td>
-                <td> {task.id} </td>
-                <td> {task.id} </td>
-                <td> {task.id} </td>
+                <td> {task.description} </td>
+                <td> {task.dueDate} </td>
+                <td> {task.storyPoints} </td>
+                <td> {task.status} </td>
             <td>
                 <button
                     style={{ marginLeft: "10px" }}

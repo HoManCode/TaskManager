@@ -5,8 +5,8 @@ const TASK_API_BASE_URL = "api/tasks";
 
 class TaskService  {
 
-create(userJwt){
-  return Promise.resolve(ajax(TASK_API_BASE_URL,"POST",userJwt));
+create(userJwt,TaskData){
+  return Promise.resolve(ajax(TASK_API_BASE_URL,"POST",userJwt,TaskData));
 }
 
 getTasks(userJwt) {
