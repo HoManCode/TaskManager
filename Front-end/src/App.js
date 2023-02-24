@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CreateUserComponent from "./components/CreateUserComponent";
 import CreateTaskComponent from "./components/CreateTaskComponent";
 import ViewUserComponent from "./components/ViewUserComponent";
+import ViewTaskComponent from "./components/ViewTaskComponent";
 import Login from "./components/Login";
 import PrivateRoute from "./components/PrivateRoute"
 import HomePage from "./components/HomePage"
@@ -57,6 +58,12 @@ function App() {
           <Route path="/add-Task" element={
             <PrivateRoute>
               <CreateTaskComponent />
+            </PrivateRoute>}
+          />
+
+          <Route path="/view-Task/:id" element={
+            <PrivateRoute>
+              <ViewTaskComponent />
             </PrivateRoute>}
           />
           

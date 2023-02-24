@@ -18,6 +18,11 @@ const Dashboard = () => {
       navigate("/login");
     }
   }, []);
+
+  const toVeiwTask = (id) => {
+    let path = `/view-Task/${id}`;
+    navigate(path);
+  };
   
   return (
     <div className="container">
@@ -56,6 +61,7 @@ const Dashboard = () => {
                   <button
                     style={{ marginLeft: "10px" }}
                     className="btn btn-info"
+                    onClick={() => toVeiwTask(task.id)}
                   >
                     View
                 </button>
