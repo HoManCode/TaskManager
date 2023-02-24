@@ -1,6 +1,7 @@
 package com.TaskManagement.TM.controller;
 
 import com.TaskManagement.TM.dto.TaskDto;
+import com.TaskManagement.TM.exception.ResourceNotFoundException;
 import com.TaskManagement.TM.model.Task;
 import com.TaskManagement.TM.model.User;
 import com.TaskManagement.TM.service.TaskService;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -36,6 +38,25 @@ public class TaskController {
         Set<Task> tasksByUsername = taskService.findByUsername(user.getUsername());
 
         return ResponseEntity.ok(tasksByUsername);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getTask(@PathVariable Long id,@AuthenticationPrincipal User user){
+        Set<Task> tasksByUsername = taskService.findByUsername(user.getUsername());
+
+        Task task = tasksByUsername.stream().filter(tas->tas.getId() == id).findFirst().orElseThrow(
+                () -> new ResourceNotFoundException("User does not exist with id: "+ id)
+        );
+
+        return ResponseEntity.ok(task);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateTask(@PathVariable Long id,
+                                        @RequestBody TaskDto taskDto){
+        Task updatedTask = taskService.update(id,taskDto);
+
+        return ResponseEntity.ok(updatedTask);
     }
 
 

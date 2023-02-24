@@ -12,6 +12,7 @@ const CreateTaskComponent = () => {
   const { id } = useParams();
   const user = useUser();
 
+
   const TaskData = { description, dueDate, storyPoints, status  };
   
 
@@ -19,12 +20,13 @@ const CreateTaskComponent = () => {
     e.preventDefault();
 
     if (
-      TaskData.firstName !== "" &&
-      TaskData.lastName !== "" &&
-      TaskData.email !== ""
+      TaskData.description !== "" &&
+      TaskData.dueDate !== "" &&
+      TaskData.storyPoints !== "" &&
+      TaskData.status !== ""
     ) {
       if (id) {
-        TaskService.updateUser()
+        TaskService.updateUser(id,user.jwt,TaskData)
           .then(navigate("/dashboard"))
           .catch((e) => console.log(e));
       } else {
@@ -47,16 +49,16 @@ const CreateTaskComponent = () => {
 
   useEffect(() => {
     if (id) {
-      TaskService.getUserById(id)
+      TaskService.getTaskById(id,user.jwt)
         .then((res) => {
-          setDescription(res.data.description);
-          setDueDate(res.data.dueDate);
-          setStoryPoints(res.data.storyPoints);
-          setStatus(res.data.status);
+          setDescription(res.description);
+          setDueDate(res.dueDate);
+          setStoryPoints(res.storyPoints);
+          setStatus(res.status);
         })
         .catch((e) => console.log(e));
     }
-  }, []);
+  }, [id]);
 
   const routeChange = () => {
     let path = "/dashboard";

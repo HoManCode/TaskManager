@@ -17,7 +17,7 @@ const Dashboard = () => {
       console.warn("No valid jwt found, redirecting to login page");
       navigate("/login");
     }
-  }, [user.jwt]);
+  }, []);
   
   return (
     <div className="container">
@@ -46,12 +46,13 @@ const Dashboard = () => {
                 <td> {task.storyPoints} </td>
                 <td> {task.status} </td>
             <td>
-                <button
-                    style={{ marginLeft: "10px" }}
+                  <Link
+                    to={`/add-Task/${task.id}`}
                     className="btn btn-info"
+                    href=""
                   >
                     Update
-                  </button>
+                  </Link>
                   <button
                     style={{ marginLeft: "10px" }}
                     className="btn btn-info"

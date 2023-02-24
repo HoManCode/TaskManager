@@ -11,4 +11,6 @@ import java.util.Set;
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
     Set<Task> findByUsername(String username);
+
+    Optional<Task> findById(Long id);
 }

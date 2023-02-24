@@ -49,16 +49,16 @@ function App() {
             </PrivateRoute>}
           />
           <Route path="/add-Task/:id" element={
-            //<PrivateRoute>
+            <PrivateRoute>
               <CreateTaskComponent />
-            //</PrivateRoute>}
-          }/>
+            </PrivateRoute>}
+          />
 
           <Route path="/add-Task" element={
-            //<PrivateRoute>
+            <PrivateRoute>
               <CreateTaskComponent />
-            //</PrivateRoute>}
-          }/>
+            </PrivateRoute>}
+          />
           
           
         </Routes>
