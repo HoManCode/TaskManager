@@ -23,6 +23,17 @@ const Dashboard = () => {
     let path = `/view-Task/${id}`;
     navigate(path);
   };
+
+  function deleteTask(id) {
+    //e.preventDefault();
+    TaskService.deleteTaskById(id,user.jwt)
+      .then(
+        setTasks(
+          tasks.filter((task) => task.email === id)
+        )
+      )
+      .catch((e) => console.log(e));
+  }
   
   return (
     <div className="container">
@@ -65,6 +76,13 @@ const Dashboard = () => {
                   >
                     View
                 </button>
+                <button
+                    style={{ marginLeft: "10px" }}
+                    onClick={() => deleteTask(task.id)}
+                    className="btn btn-danger"
+                  >
+                    Delete
+                  </button>
             </td>
             </tr>
             ))}

@@ -21,6 +21,10 @@ updateUser(id,userJwt,TaskData) {
   return Promise.resolve(ajax(`${TASK_API_BASE_URL}/${id}`,"PUT",userJwt,TaskData));
 }
 
+deleteTaskById(id,userJwt) {
+  return Promise.resolve(ajax(`${TASK_API_BASE_URL}/${id}`,"DELETE",userJwt));
+}
+
 
 
 

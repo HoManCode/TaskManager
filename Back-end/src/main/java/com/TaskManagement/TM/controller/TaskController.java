@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.PublicKey;
 import java.util.Optional;
 import java.util.Set;
 
@@ -57,6 +58,19 @@ public class TaskController {
         Task updatedTask = taskService.update(id,taskDto);
 
         return ResponseEntity.ok(updatedTask);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteTask(@PathVariable Long id,@AuthenticationPrincipal User user){
+        Set<Task> tasksByUsername = taskService.findByUsername(user.getUsername());
+
+        Task task = tasksByUsername.stream().filter(tas->tas.getId() == id).findFirst().orElseThrow(
+                () -> new ResourceNotFoundException("User does not exist with id: "+ id)
+        );
+
+        taskService.delete(task);
+
+        return ResponseEntity.ok(task);
     }
 
 

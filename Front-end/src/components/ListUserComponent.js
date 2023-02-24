@@ -68,17 +68,17 @@ const ListUserComponent = () => {
                   </Link>
                   <button
                     style={{ marginLeft: "10px" }}
-                    onClick={(e) => deleteUser(e, User.id)}
-                    className="btn btn-danger"
-                  >
-                    Delete
-                  </button>
-                  <button
-                    style={{ marginLeft: "10px" }}
                     onClick={() => toVeiwUser(User.id)}
                     className="btn btn-info"
                   >
                     View
+                  </button>
+                  <button
+                    style={{ marginLeft: "10px" }}
+                    onClick={(e) => deleteUser(e, User.id)}
+                    className="btn btn-danger"
+                  >
+                    Delete
                   </button>
                 </td>
               </tr>
