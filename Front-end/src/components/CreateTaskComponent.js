@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import TaskService from "../services/TaskService";
 import { useUser } from '../services/UserProvider';
+import Dropdown from "./Dropdown";
 
 const CreateTaskComponent = () => {
   const [description, setDescription] = useState("");
@@ -46,6 +47,17 @@ const CreateTaskComponent = () => {
       return "Create Task";
     }
   }
+
+  const options= [
+    {value:"BACKLOG",label:"BACKLOG"},
+    {value:"TO_DO",label:"TO_DO"},
+    {value:"DESIGN",label:"DESIGN"},
+    {value:"IN_PROGRESS",label:"IN_PROGRESS"},
+    {value:"REVIEW",label:"REVIEW"},
+    {value:"TEST",label:"TEST"},
+    {value:"DONE",label:"DONE"},
+    {value:"CANCELLED",label:"CANCELLED"},
+  ]
 
   useEffect(() => {
     if (id) {
@@ -109,6 +121,7 @@ const CreateTaskComponent = () => {
                     defaultValue="BACKLOG"
                   />
                 </div>
+                <Dropdown placeHolder="Select..." options={options}/>
                 <button
                   onClick={(e) => saveTask(e)}
                   className="btn btn-success"
@@ -123,7 +136,9 @@ const CreateTaskComponent = () => {
           </div>
         </div>
       </div>
+      
     </div>
+    
   );
 };
 
