@@ -37,7 +37,7 @@ export default function Dropdown({placeHolder, options}) {
           <div className="dropdown-tools">
           <div className="dropdown-tool">
             <Icon />
-          </div>
+          
           {showMenu && (
             <div className="dropdown-menu">
                 {options.map((option) => (
@@ -47,6 +47,7 @@ export default function Dropdown({placeHolder, options}) {
                 ))}
                 </div>
           )}
+                </div>
               </div>
             </div>
           </div>
