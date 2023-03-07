@@ -52,7 +52,9 @@ public class AuthController {
                         loginDto.getUsername(),
                         loginDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = jwtUtil.generateToken(authentication);
+
+        User user = (User) authentication.getPrincipal();
+        String token = jwtUtil.generateToken(user);
 
         ResponseCookie cookie = ResponseCookie.from("jwt", token)
                 .domain(domain)

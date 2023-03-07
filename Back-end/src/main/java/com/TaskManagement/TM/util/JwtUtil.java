@@ -55,20 +55,6 @@ public class JwtUtil implements Serializable {
         return expiration.before(new Date());
     }
 
-    public String generateToken(Authentication authentication) {
-        String username = authentication.getName();
-        Date currentDate = new Date();
-        Date expireDate = new Date(currentDate.getTime() + jwtExpiration);
-
-        String token = Jwts.builder()
-                .setSubject(username)
-                .setIssuedAt(new Date())
-                .setExpiration(expireDate)
-                .signWith(SignatureAlgorithm.HS512,jwtSecret)
-                .compact();
-        return token;
-    }
-
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("authorities", userDetails.getAuthorities()
