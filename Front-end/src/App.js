@@ -1,5 +1,5 @@
 import "./App.css";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ListUserComponent from "./components/ListUserComponent";
 import HeaderComponents from "./components/HeaderComponent";
 import FooterComponent from "./components/FooterComponents";
@@ -13,8 +13,24 @@ import PrivateRoute from "./components/PrivateRoute"
 import HomePage from "./components/HomePage"
 import Dashboard from "./components/Dashboard";
 import Signup from "./components/Signup";
+import jwt_decode from "jwt-decode";
+import { useUser } from "./services/UserProvider";
 
 function App() {
+  const [roles, setRoles] = useState([]);
+  const user = useUser();
+
+  useEffect(() =>{
+    setRoles(getRolesFromJWT());
+  },[user.jwt]);
+
+  function getRolesFromJWT() {
+    if(user.jwt){
+      const decodedJwt = jwt_decode(user.jwt);
+      return decodedJwt.authorities;
+    }
+    return [];
+  }
   return (
     <BrowserRouter>
       <HeaderComponents />
