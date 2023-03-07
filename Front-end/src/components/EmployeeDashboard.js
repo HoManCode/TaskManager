@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useUser } from '../services/UserProvider';
 
 
-const Dashboard = () => {
+const EmployeeDashboard = () => {
   const [tasks, setTasks] = useState([]);
   const navigate = useNavigate();
   const user = useUser();
@@ -23,17 +23,6 @@ const Dashboard = () => {
     let path = `/view-Task/${id}`;
     navigate(path);
   };
-
-  function deleteTask(id) {
-    //e.preventDefault();
-    TaskService.deleteTaskById(id,user.jwt)
-      .then(
-        setTasks(
-          tasks.filter((task) => task.email === id)
-        )
-      )
-      .catch((e) => console.log(e));
-  }
   
   return (
     <div className="container">
@@ -76,13 +65,6 @@ const Dashboard = () => {
                   >
                     View
                 </button>
-                <button
-                    style={{ marginLeft: "10px" }}
-                    onClick={() => deleteTask(task.id)}
-                    className="btn btn-danger"
-                  >
-                    Delete
-                  </button>
             </td>
             </tr>
             ))}
@@ -92,4 +74,4 @@ const Dashboard = () => {
     </div>
   );
 };
-export default Dashboard;
+export default EmployeeDashboard;

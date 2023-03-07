@@ -1,6 +1,7 @@
-import React, { useState} from "react";
+import React, { useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../services/UserProvider";
+import jwt_decode from "jwt-decode";
 
 
 const Login = () =>{
@@ -9,7 +10,14 @@ const Login = () =>{
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState(null);
   const navigate = useNavigate();
+  const [authorities, setAuthorities] = useState(null);
 
+  useEffect(() => {
+    if (user && user.jwt) {
+      const decodedJwt = jwt_decode(user.jwt);
+      setAuthorities(decodedJwt.authorities);
+    }
+  }, [user, user.jwt]);
   
 
   const sendLoginRequest = (e) => {
@@ -40,7 +48,19 @@ const Login = () =>{
     .then((data) => {
       if (data) {
         user.setJwt(data);
-        navigate("/dashboard");
+
+        switch(authorities[0]){
+          case "ROLE_ADMIN":
+            navigate("/admins/dashboard");
+            break;
+          case "ROLE_MANAGER":
+            navigate("/managers/dashboard");
+            break;
+          case "ROLE_EMPLOYEE":
+            navigate("/employees/dashboard");
+            break;
+        }
+        
       }
     });
 
