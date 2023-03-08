@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../services/UserProvider";
 import Cookies from "js-cookie";
+import DropdownOptions from "./DropdownOptions";
 
 const Signup = () =>{
   const user = useUser();
@@ -10,6 +11,12 @@ const Signup = () =>{
   const [firstName, setfirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const navigate = useNavigate();
+
+  const options= [
+    {value:"ADMIN",label:"ADMIN"},
+    {value:"MANAGER",label:"MANAGER"},
+    {value:"DESIGN",label:"EMPLOYEE"},
+  ]
 
 
   const registerAndLoginUser = (e) => {
@@ -88,6 +95,7 @@ return (
                   placeholder="Password"
                 />
               </div>
+              <DropdownOptions placeHolder={"Role"} options={options}/>
               <button
                 disabled={username.length === 0 || password.length === 0}
                 onClick={(e) => registerAndLoginUser(e)}

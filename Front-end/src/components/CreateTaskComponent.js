@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import TaskService from "../services/TaskService";
 import { useUser } from '../services/UserProvider';
-import Dropdown from "./Dropdown";
+import DropdownOptions from "./DropdownOptions";
 
 const CreateTaskComponent = () => {
   const [description, setDescription] = useState("");
@@ -121,7 +121,7 @@ const CreateTaskComponent = () => {
                     defaultValue="BACKLOG"
                   />
                 </div>
-                <Dropdown placeHolder="Select..." options={options}/>
+                <DropdownOptions placeHolder={"Status"} options={options}/>
                 <button
                   onClick={(e) => saveTask(e)}
                   className="btn btn-success"
