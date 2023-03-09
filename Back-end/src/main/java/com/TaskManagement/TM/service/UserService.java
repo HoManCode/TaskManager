@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+
 @Service
 public class UserService {
 
@@ -28,9 +30,19 @@ public class UserService {
         user.setLastName(userDto.getLastName());
         user.setUsername(userDto.getUsername());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        userRepository.save(user);
         Authorities authority = new Authorities();
-        authority.setAuthority(Authority.ROLE_EMPLOYEE);
+        switch (userDto.getRole()){
+            case ("ADMIN"):
+                authority.setAuthority(Authority.ROLE_ADMIN);
+                break;
+            case ("MANAGER"):
+                authority.setAuthority(Authority.ROLE_MANAGER);
+                break;
+            case ("EMPLOYEE"):
+                authority.setAuthority(Authority.ROLE_EMPLOYEE);
+                break;
+        }
+        userRepository.save(user);
         authority.setUser(user);
         authorityRepository.save(authority);
     }

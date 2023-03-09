@@ -10,7 +10,7 @@ const Signup = () =>{
   const [password, setPassword] = useState("");
   const [firstName, setfirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [title, setTitle] = useState("Role");
+  const [role, setRole] = useState("Role");
   const navigate = useNavigate();
 
   const options= [
@@ -27,6 +27,7 @@ const Signup = () =>{
       lastName: lastName,
       username: username,
       password: password,
+      role:role,
     }
 
     fetch("api/users/register", { 
@@ -41,7 +42,7 @@ const Signup = () =>{
         return Promise.all([response.json(), response.headers]);
       else return Promise.reject("Invalid login attempt");
     })
-    .then(([body, headers]) => {
+    .then(() => {
       user.setJwt(Cookies.get("jwt"));
       navigate("/dashboard");
     })
@@ -52,8 +53,7 @@ const Signup = () =>{
   }
 
   const handleRole = (e) => {
-    console.log(e);
-    setTitle(e);
+    setRole(e);
   }
 
 return (
@@ -100,7 +100,7 @@ return (
                   placeholder="Password"
                 />
               </div>
-              <DropdownOptions title={title} options={options} handleEvent={handleRole}/>
+              <DropdownOptions title={role} options={options} handleEvent={handleRole}/>
               <button
                 disabled={username.length === 0 || password.length === 0}
                 onClick={(e) => registerAndLoginUser(e)}
