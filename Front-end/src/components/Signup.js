@@ -10,12 +10,13 @@ const Signup = () =>{
   const [password, setPassword] = useState("");
   const [firstName, setfirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [title, setTitle] = useState("Role");
   const navigate = useNavigate();
 
   const options= [
     {value:"ADMIN",label:"ADMIN"},
     {value:"MANAGER",label:"MANAGER"},
-    {value:"DESIGN",label:"EMPLOYEE"},
+    {value:"EMPLOYEE",label:"EMPLOYEE"},
   ]
 
 
@@ -50,6 +51,10 @@ const Signup = () =>{
 
   }
 
+  const handleRole = (e) => {
+    console.log(e);
+    setTitle(e);
+  }
 
 return (
     <div>
@@ -95,7 +100,7 @@ return (
                   placeholder="Password"
                 />
               </div>
-              <DropdownOptions placeHolder={"Role"} options={options}/>
+              <DropdownOptions title={title} options={options} handleEvent={handleRole}/>
               <button
                 disabled={username.length === 0 || password.length === 0}
                 onClick={(e) => registerAndLoginUser(e)}

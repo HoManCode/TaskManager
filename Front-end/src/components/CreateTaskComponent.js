@@ -9,6 +9,7 @@ const CreateTaskComponent = () => {
   const [dueDate, setDueDate] = useState("");
   const [storyPoints, setStoryPoints] = useState("");
   const [status, setStatus] = useState("");
+  const [title, setTitle] = useState("Status");
   const navigate = useNavigate();
   const { id } = useParams();
   const user = useUser();
@@ -77,6 +78,11 @@ const CreateTaskComponent = () => {
     navigate(path);
   };
 
+  const handleTitle = (e) => {
+    console.log(e);
+    setTitle(e);
+  }
+
   return (
     <div>
       <div className="container">
@@ -121,7 +127,7 @@ const CreateTaskComponent = () => {
                     defaultValue="BACKLOG"
                   />
                 </div>
-                <DropdownOptions placeHolder={"Status"} options={options}/>
+                <DropdownOptions title={`${title}`} options={options} handleEvent={handleTitle}/>
                 <button
                   onClick={(e) => saveTask(e)}
                   className="btn btn-success"
