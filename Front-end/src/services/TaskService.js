@@ -13,6 +13,10 @@ getTasks(userJwt) {
   return Promise.resolve(ajax(TASK_API_BASE_URL,"GET",userJwt));
 }
 
+getAllTasks(userJwt) {
+  return Promise.resolve(ajax(TASK_API_BASE_URL+"/admin","GET",userJwt));
+}
+
 getTaskById(id,userJwt) {
   return Promise.resolve(ajax(`${TASK_API_BASE_URL}/${id}`,"GET",userJwt));
 }

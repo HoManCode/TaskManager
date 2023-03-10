@@ -35,10 +35,17 @@ public class TaskController {
     }
 
     @GetMapping("")
-    public ResponseEntity<?> getAllTasks(@AuthenticationPrincipal User user){
+    public ResponseEntity<?> getTasks(@AuthenticationPrincipal User user){
         Set<Task> tasksByUsername = taskService.findByUsername(user.getUsername());
 
         return ResponseEntity.ok(tasksByUsername);
+    }
+
+    @GetMapping("/admin")
+    public ResponseEntity<?> getAllTasks(@AuthenticationPrincipal User user){
+        Set<Task> allTasks = taskService.findAllTasks(user.getAuthorities());
+
+        return ResponseEntity.ok(allTasks);
     }
 
     @GetMapping("/{id}")

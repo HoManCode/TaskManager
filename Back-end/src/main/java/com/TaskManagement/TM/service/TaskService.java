@@ -3,6 +3,7 @@ package com.TaskManagement.TM.service;
 import com.TaskManagement.TM.Enum.TaskStatus;
 import com.TaskManagement.TM.dto.TaskDto;
 import com.TaskManagement.TM.exception.ResourceNotFoundException;
+import com.TaskManagement.TM.model.Authorities;
 import com.TaskManagement.TM.model.Task;
 import com.TaskManagement.TM.model.User;
 import com.TaskManagement.TM.repository.TaskRepository;
@@ -10,8 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class TaskService {
@@ -58,5 +62,14 @@ public class TaskService {
 
     public void delete(Task task) {
         taskRepository.delete(task);
+    }
+
+    public Set<Task> findAllTasks(Set<Authorities> authorities) {
+        Set<Task> tasks = new HashSet<>();
+        List<Authorities> authoritiesList = authorities.stream().filter((auth) -> auth.getAuthority().equals("ROLE_ADMIN")).collect(Collectors.toList());
+        if(authoritiesList.size()>0){
+            tasks.addAll(taskRepository.findAll());
+        }
+        return tasks;
     }
 }

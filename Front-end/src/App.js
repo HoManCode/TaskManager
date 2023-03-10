@@ -13,6 +13,7 @@ import PrivateRoute from "./components/PrivateRoute"
 import HomePage from "./components/HomePage"
 import EmployeeDashboard from "./components/EmployeeDashboard";
 import ManagerDashboard from "./components/ManagerDashboard";
+import AdminDashboard from "./components/ManagerDashboard";
 import Signup from "./components/Signup";
 import jwt_decode from "jwt-decode";
 import { useUser } from "./services/UserProvider";
@@ -40,6 +41,18 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={<HomePage />} />
+          <Route
+            path="/admins/dashboard"
+            element={
+            roles.find((role) => role === "ROLE_ADMIN") ? (
+              <PrivateRoute>
+                <AdminDashboard />
+              </PrivateRoute>
+            ) : (
+            <div>You don't have the appropriate role.</div>
+            )
+        }
+        />
           <Route
             path="/employees/dashboard"
             element={
