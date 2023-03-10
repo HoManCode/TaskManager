@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import TaskService from "../services/TaskService";
 import { useUser } from '../services/UserProvider';
 import DropdownOptions from "./DropdownOptions";
+import jwt_decode from "jwt-decode";
+import DashNav from "../services/DashNav";
 
 const CreateTaskComponent = () => {
   const [description, setDescription] = useState("");
@@ -12,9 +14,17 @@ const CreateTaskComponent = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const user = useUser();
+  const [authorities, setAuthorities] = useState(null);
 
 
   const TaskData = { description, dueDate, storyPoints, status  };
+
+  useEffect(() => {
+    if (user && user.jwt) {
+      const decodedJwt = jwt_decode(user.jwt);
+      setAuthorities(decodedJwt.authorities);
+    }
+  }, [user, user.jwt]);
   
 
   function saveTask(e) {
@@ -28,11 +38,11 @@ const CreateTaskComponent = () => {
     ) {
       if (id) {
         TaskService.updateUser(id,user.jwt,TaskData)
-          .then(navigate("/dashboard"))
+          .then(DashNav(authorities[0],navigate))
           .catch((e) => console.log(e));
       } else {
         TaskService.create(user.jwt,TaskData)
-          .then(navigate("/dashboard"))
+          .then(DashNav(authorities[0],navigate))
           .catch((e) => console.log(e));
       }
     } else {
@@ -72,10 +82,6 @@ const CreateTaskComponent = () => {
     }
   }, [id]);
 
-  const routeChange = () => {
-    let path = "/dashboard";
-    navigate(path);
-  };
 
   const handleStatus = (e) => {
     setStatus(e);
@@ -126,7 +132,7 @@ const CreateTaskComponent = () => {
                 >
                   Save
                 </button>{" "}
-                <button className="btn btn-danger" onClick={routeChange}>
+                <button className="btn btn-danger" onClick={() => DashNav(authorities[0],navigate)}>
                   Cancel
                 </button>
               </form>

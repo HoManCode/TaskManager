@@ -10,7 +10,7 @@ const Login = () =>{
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState(null);
   const navigate = useNavigate(); 
-  const [authorities, setAuthorities] = useState(null);
+  const [authorities, setAuthorities] = useState([]);
   
 
   useEffect(() => {
@@ -48,6 +48,10 @@ const Login = () =>{
     .then((data) => {
       if (data) {
         user.setJwt(data);
+        if (user && user.jwt) {
+          const decodedJwt = jwt_decode(user.jwt);
+          setAuthorities(decodedJwt.authorities);
+        }
         DashNav(authorities[0],navigate); 
       }
     });

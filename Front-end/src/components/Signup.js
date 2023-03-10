@@ -12,6 +12,7 @@ const Signup = () =>{
   const [lastName, setLastName] = useState("");
   const [role, setRole] = useState("Role");
   const navigate = useNavigate();
+  
 
   const options= [
     {value:"ADMIN",label:"ADMIN"},
@@ -20,7 +21,7 @@ const Signup = () =>{
   ]
 
 
-  const registerAndLoginUser = (e) => {
+  const registerUser = (e) => {
     e.preventDefault();
     const reqBody = {
       firstName: firstName,
@@ -44,7 +45,7 @@ const Signup = () =>{
     })
     .then(() => {
       user.setJwt(Cookies.get("jwt"));
-      navigate("/dashboard");
+      navigate("/login");
     })
     .catch((message) => {
       alert(message);
@@ -103,7 +104,7 @@ return (
               <DropdownOptions title={role} options={options} handleEvent={handleRole}/>
               <button
                 disabled={username.length === 0 || password.length === 0}
-                onClick={(e) => registerAndLoginUser(e)}
+                onClick={(e) => registerUser(e)}
                 className="btn btn-success"
               >
                 Register
