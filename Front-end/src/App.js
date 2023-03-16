@@ -13,7 +13,7 @@ import PrivateRoute from "./components/PrivateRoute"
 import HomePage from "./components/HomePage"
 import EmployeeDashboard from "./components/EmployeeDashboard";
 import ManagerDashboard from "./components/ManagerDashboard";
-import AdminDashboard from "./components/ManagerDashboard";
+import AdminDashboard from "./components/AdminDashboard";
 import Signup from "./components/Signup";
 import jwt_decode from "jwt-decode";
 import { useUser } from "./services/UserProvider";

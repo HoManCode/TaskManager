@@ -24,8 +24,6 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
-    @Autowired
-    private JwtUtil jwtUtil;
 
     @PostMapping("")
     public ResponseEntity<?> createTask(@AuthenticationPrincipal User user, @RequestBody TaskDto taskDto) {

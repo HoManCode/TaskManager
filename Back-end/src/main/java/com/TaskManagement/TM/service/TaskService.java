@@ -1,6 +1,4 @@
 package com.TaskManagement.TM.service;
-
-import com.TaskManagement.TM.Enum.TaskStatus;
 import com.TaskManagement.TM.dto.TaskDto;
 import com.TaskManagement.TM.exception.ResourceNotFoundException;
 import com.TaskManagement.TM.model.Authorities;
@@ -9,8 +7,6 @@ import com.TaskManagement.TM.model.User;
 import com.TaskManagement.TM.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class TaskService {
+
     @Autowired
     private TaskRepository taskRepository;
     public Task create(User user, TaskDto taskDto) {
@@ -70,6 +67,7 @@ public class TaskService {
         if(authoritiesList.size()>0){
             tasks.addAll(taskRepository.findAll());
         }
+
         return tasks;
     }
 }
