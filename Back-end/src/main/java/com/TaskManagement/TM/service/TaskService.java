@@ -18,6 +18,12 @@ public class TaskService {
 
     @Autowired
     private TaskRepository taskRepository;
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private TaskService taskService;
+
     public Task create(User user, TaskDto taskDto) {
 
         Task task = new Task();
@@ -69,5 +75,19 @@ public class TaskService {
         }
 
         return tasks;
+    }
+
+    public Task selectATask(Long id,User user){
+        Optional<Task> taskOptional;
+        if(userService.isAdmin(user)){
+            taskOptional = taskService.findById(id);
+        }else{
+            Set<Task> tasksByUsername = taskService.findByUsername(user.getUsername());
+            taskOptional = tasksByUsername.stream().filter(tas->tas.getId() == id).findFirst();
+        }
+        Task task = taskOptional.orElseThrow(
+                () -> new ResourceNotFoundException("User does not exist with id: "+ id));
+
+        return task;
     }
 }
