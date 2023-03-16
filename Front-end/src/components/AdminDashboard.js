@@ -10,7 +10,7 @@ const AdminDashboard = () => {
   const user = useUser();
 
   useEffect(() => {
-    TaskService.getAllTasks(user.jwt).then((tasks) =>{
+    TaskService.getTasksAdmin(user.jwt).then((tasks) =>{
       setTasks(tasks);
     });
     if (!user.jwt) {

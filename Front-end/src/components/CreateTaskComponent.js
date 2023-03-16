@@ -37,7 +37,7 @@ const CreateTaskComponent = () => {
       TaskData.status !== ""
     ) {
       if (id) {
-        TaskService.updateUser(id,user.jwt,TaskData)
+        TaskService.updateTask(id,user.jwt,TaskData)
           .then(DashNav(authorities[0],navigate))
           .catch((e) => console.log(e));
       } else {

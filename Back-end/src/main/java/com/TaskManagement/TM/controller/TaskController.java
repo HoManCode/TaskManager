@@ -1,19 +1,18 @@
 package com.TaskManagement.TM.controller;
-
 import com.TaskManagement.TM.dto.TaskDto;
 import com.TaskManagement.TM.exception.ResourceNotFoundException;
+import com.TaskManagement.TM.model.Authorities;
 import com.TaskManagement.TM.model.Task;
 import com.TaskManagement.TM.model.User;
 import com.TaskManagement.TM.service.TaskService;
-import com.TaskManagement.TM.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.PublicKey;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/tasks")
@@ -39,21 +38,23 @@ public class TaskController {
         return ResponseEntity.ok(tasksByUsername);
     }
 
-    @GetMapping("/admin")
-    public ResponseEntity<?> getAllTasks(@AuthenticationPrincipal User user){
-        Set<Task> allTasks = taskService.findAllTasks(user.getAuthorities());
-
-        return ResponseEntity.ok(allTasks);
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<?> getTask(@PathVariable Long id,@AuthenticationPrincipal User user){
         Set<Task> tasksByUsername = taskService.findByUsername(user.getUsername());
+        Optional<Task> taskOptional;
+        List<Authorities> authoritiesList = user
+                .getAuthorities()
+                .stream()
+                .filter((auth) -> auth.getAuthority().equals("ROLE_ADMIN"))
+                .collect(Collectors.toList());
+        if(authoritiesList.size()>0){
+            taskOptional = taskService.findById(id);
+        }else{
+            taskOptional = tasksByUsername.stream().filter(tas->tas.getId() == id).findFirst();
+        }
 
-        Task task = tasksByUsername.stream().filter(tas->tas.getId() == id).findFirst().orElseThrow(
-                () -> new ResourceNotFoundException("User does not exist with id: "+ id)
-        );
-
+        Task task = taskOptional.orElseThrow(
+                () -> new ResourceNotFoundException("User does not exist with id: "+ id));
         return ResponseEntity.ok(task);
     }
 
@@ -68,7 +69,6 @@ public class TaskController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteTask(@PathVariable Long id,@AuthenticationPrincipal User user){
         Set<Task> tasksByUsername = taskService.findByUsername(user.getUsername());
-
         Task task = tasksByUsername.stream().filter(tas->tas.getId() == id).findFirst().orElseThrow(
                 () -> new ResourceNotFoundException("User does not exist with id: "+ id)
         );
@@ -76,6 +76,12 @@ public class TaskController {
         taskService.delete(task);
 
         return ResponseEntity.ok(task);
+    }
+
+    @GetMapping("/admin")
+    public ResponseEntity<?> getTasksAdmin(@AuthenticationPrincipal User user){
+        Set<Task> allTasks = taskService.findAllTasks(user.getAuthorities());
+        return ResponseEntity.ok(allTasks);
     }
 
 
