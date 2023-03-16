@@ -11,6 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -45,6 +47,17 @@ public class UserService {
         userRepository.save(user);
         authority.setUser(user);
         authorityRepository.save(authority);
+    }
+
+    public boolean isAdmin(User user){
+        List<Authorities> authoritiesList = user
+                .getAuthorities()
+                .stream()
+                .filter((auth) -> auth.getAuthority().equals("ROLE_ADMIN"))
+                .collect(Collectors.toList());
+
+        return authoritiesList.size()>0;
+
     }
 
 }

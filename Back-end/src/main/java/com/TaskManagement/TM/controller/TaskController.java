@@ -5,6 +5,7 @@ import com.TaskManagement.TM.model.Authorities;
 import com.TaskManagement.TM.model.Task;
 import com.TaskManagement.TM.model.User;
 import com.TaskManagement.TM.service.TaskService;
+import com.TaskManagement.TM.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,6 +24,9 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
+    @Autowired
+    private UserService userService;
+
 
     @PostMapping("")
     public ResponseEntity<?> createTask(@AuthenticationPrincipal User user, @RequestBody TaskDto taskDto) {
@@ -40,19 +44,13 @@ public class TaskController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getTask(@PathVariable Long id,@AuthenticationPrincipal User user){
-        Set<Task> tasksByUsername = taskService.findByUsername(user.getUsername());
         Optional<Task> taskOptional;
-        List<Authorities> authoritiesList = user
-                .getAuthorities()
-                .stream()
-                .filter((auth) -> auth.getAuthority().equals("ROLE_ADMIN"))
-                .collect(Collectors.toList());
-        if(authoritiesList.size()>0){
+        if(userService.isAdmin(user)){
             taskOptional = taskService.findById(id);
         }else{
+            Set<Task> tasksByUsername = taskService.findByUsername(user.getUsername());
             taskOptional = tasksByUsername.stream().filter(tas->tas.getId() == id).findFirst();
         }
-
         Task task = taskOptional.orElseThrow(
                 () -> new ResourceNotFoundException("User does not exist with id: "+ id));
         return ResponseEntity.ok(task);
@@ -68,13 +66,16 @@ public class TaskController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteTask(@PathVariable Long id,@AuthenticationPrincipal User user){
-        Set<Task> tasksByUsername = taskService.findByUsername(user.getUsername());
-        Task task = tasksByUsername.stream().filter(tas->tas.getId() == id).findFirst().orElseThrow(
-                () -> new ResourceNotFoundException("User does not exist with id: "+ id)
-        );
-
+        Optional<Task> taskOptional;
+        if(userService.isAdmin(user)){
+            taskOptional = taskService.findById(id);
+        }else{
+            Set<Task> tasksByUsername = taskService.findByUsername(user.getUsername());
+            taskOptional = tasksByUsername.stream().filter(tas->tas.getId() == id).findFirst();
+        }
+        Task task = taskOptional.orElseThrow(
+                () -> new ResourceNotFoundException("User does not exist with id: "+ id));
         taskService.delete(task);
-
         return ResponseEntity.ok(task);
     }
 
