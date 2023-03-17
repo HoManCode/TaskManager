@@ -3,6 +3,7 @@ import com.TaskManagement.TM.dto.TaskDto;
 import com.TaskManagement.TM.model.Task;
 import com.TaskManagement.TM.model.User;
 import com.TaskManagement.TM.service.TaskService;
+import com.TaskManagement.TM.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,6 +19,7 @@ public class TaskController {
 
     @Autowired
     private TaskService taskService;
+
 
     @PostMapping("")
     public ResponseEntity<?> createTask(@AuthenticationPrincipal User user, @RequestBody TaskDto taskDto) {

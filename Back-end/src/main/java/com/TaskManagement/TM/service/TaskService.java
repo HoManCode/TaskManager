@@ -18,11 +18,10 @@ public class TaskService {
 
     @Autowired
     private TaskRepository taskRepository;
+
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private TaskService taskService;
 
     public Task create(User user, TaskDto taskDto) {
 
@@ -73,16 +72,15 @@ public class TaskService {
         if(authoritiesList.size()>0){
             tasks.addAll(taskRepository.findAll());
         }
-
         return tasks;
     }
 
     public Task selectATask(Long id,User user){
         Optional<Task> taskOptional;
         if(userService.isAdmin(user)){
-            taskOptional = taskService.findById(id);
+            taskOptional = findById(id);
         }else{
-            Set<Task> tasksByUsername = taskService.findByUsername(user.getUsername());
+            Set<Task> tasksByUsername = findByUsername(user.getUsername());
             taskOptional = tasksByUsername.stream().filter(tas->tas.getId() == id).findFirst();
         }
         Task task = taskOptional.orElseThrow(
@@ -90,4 +88,7 @@ public class TaskService {
 
         return task;
     }
+
+
+
 }
