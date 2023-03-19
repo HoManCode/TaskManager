@@ -61,11 +61,6 @@ public class UserController {
         return userRepository.findAll();
     }
 
-    //create user rest api
-    @PostMapping("")
-    public User createUser(@RequestBody User user) {
-        return userRepository.save(user);
-    }
 
     //get user by id
     @GetMapping("/{id}")
@@ -84,7 +79,6 @@ public class UserController {
         user.setFirstName(userDetails.getFirstName());
         user.setLastName(userDetails.getLastName());
         user.setEmail(userDetails.getEmail());
-
         User updatedUser = userRepository.save(user);
 
         return ResponseEntity.ok(updatedUser);
@@ -98,9 +92,9 @@ public class UserController {
                 () -> new ResourceNotFoundException("User does exist with id: "+ id));
         userRepository.delete(user);
         Map<String, Boolean> response = new HashMap<>();
-
         response.put("deleted", Boolean.TRUE);
 
+        
         return ResponseEntity.ok(response);
     }
 
