@@ -3,13 +3,17 @@ package com.TaskManagement.TM.service;
 import com.TaskManagement.TM.Enum.Authority;
 import com.TaskManagement.TM.dto.UserDto;
 import com.TaskManagement.TM.model.Authorities;
+import com.TaskManagement.TM.model.Task;
 import com.TaskManagement.TM.model.User;
 import com.TaskManagement.TM.repository.AuthorityRepository;
 import com.TaskManagement.TM.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -59,5 +63,12 @@ public class UserService {
     }
 
 
-
+    public Set<User> findAllUsers(Set<Authorities> authorities) {
+        Set<User> users = new HashSet<>();
+        List<Authorities> authoritiesList = authorities.stream().filter((auth) -> auth.getAuthority().equals("ROLE_ADMIN")).collect(Collectors.toList());
+        if(authoritiesList.size()>0){
+            users.addAll(userRepository.findAll());
+        }
+        return users;
+    }
 }

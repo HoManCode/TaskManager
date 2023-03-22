@@ -2,6 +2,7 @@ package com.TaskManagement.TM.controller;
 
 import com.TaskManagement.TM.dto.UserDto;
 import com.TaskManagement.TM.exception.ResourceNotFoundException;
+import com.TaskManagement.TM.model.Task;
 import com.TaskManagement.TM.model.User;
 import com.TaskManagement.TM.repository.UserRepository;
 import com.TaskManagement.TM.service.UserService;
@@ -14,6 +15,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -55,51 +57,14 @@ public class UserController {
 
     }
 
-    //get all employee
-    @GetMapping("")
-    public List<User> getAllUsers(){
-        return userRepository.findAll();
+    //get all users by admin
+    @GetMapping("/admin")
+    public ResponseEntity<?> getUsersAdmin(@AuthenticationPrincipal User user){
+        Set<User> allTasks = userService.findAllUsers(user.getAuthorities());
+        return ResponseEntity.ok(allTasks);
     }
 
 
-    //get user by id
-    @GetMapping("/{id}")
-    public ResponseEntity<User> getEmployeeById(@PathVariable Long id){
-        User user = userRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("User does not exist with id: "+ id));
-        return ResponseEntity.ok(user);
-    }
-
-    //update user by id
-    @PutMapping("/{id}")
-    public ResponseEntity<User> updateEmployee(@PathVariable Long id, @RequestBody User userDetails){
-        User user = userRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("User does not exist with id: "+ id));
-
-        user.setFirstName(userDetails.getFirstName());
-        user.setLastName(userDetails.getLastName());
-        user.setEmail(userDetails.getEmail());
-        User updatedUser = userRepository.save(user);
-
-        return ResponseEntity.ok(updatedUser);
-    }
-
-    //delete user by id
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Map<String, Boolean>> deleteEmployee(@PathVariable Long id){
-
-        User user = userRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("User does exist with id: "+ id));
-        userRepository.delete(user);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("deleted", Boolean.TRUE);
-
-        
-        return ResponseEntity.ok(response);
     }
 
 
-
-
-
-}

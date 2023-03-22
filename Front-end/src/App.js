@@ -1,6 +1,5 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import ListUserComponent from "./components/ListUserComponent";
 import HeaderComponents from "./components/HeaderComponent";
 import FooterComponent from "./components/FooterComponent";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -77,12 +76,7 @@ function App() {
             )
           }
           />
-          <Route path="/Users" element={
-            <PrivateRoute>
-              <ListUserComponent />
-            </PrivateRoute>} 
-          />
-        
+          
           <Route path="/add-User/" element={
             <PrivateRoute>
               <CreateUserComponent />

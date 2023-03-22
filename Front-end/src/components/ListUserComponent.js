@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from "react";
 import UserService from "../services/UserService";
 import { Link, useNavigate } from "react-router-dom";
+import { useUser } from '../services/UserProvider';
 
 const ListUserComponent = () => {
-  const [UserArray, setUserArray] = useState([]);
+  const [users, setUsers] = useState([]);
   const navigate = useNavigate();
+  const user = useUser();
+
 
   useEffect(() => {
-    getAllUser();
+    UserService.getUsersAdmin(user.jwt).then((users) =>{
+      setUsers(users);
+    });
+    if (!user.jwt) {
+      console.warn("No valid jwt found, redirecting to login page");
+      navigate("/login");
+    }
   }, []);
-
-  function getAllUser() {
-    UserService.getUsers()
-      .then((res) => {
-        setUserArray(res.data);
-        console.log(res);
-      })
-      .catch((e) => console.log(e));
-  }
 
   function deleteUser(e, id) {
     e.preventDefault();
     UserService.deleteUserById(id)
       .then(
-        setUserArray(
-          UserArray.filter((User) => User.email === id)
+        setUsers(
+          users.filter((User) => User.email === id)
         )
       )
       .catch((e) => console.log(e));
@@ -37,7 +37,7 @@ const ListUserComponent = () => {
 
   return (
     <div className="container">
-      <a href="/add-User">
+      <a href="/signup">
         <button className="btn btn-primary mb-2 mt-3">Add User</button>
       </a>
       <h2 className="text-center">Users List</h2>
@@ -48,19 +48,17 @@ const ListUserComponent = () => {
             <tr>
               <th> User First Name</th>
               <th> User Last Name</th>
-              <th> User Email</th>
               <th> Actions</th>
             </tr>
           </thead>
           <tbody>
-            {UserArray.map((User) => (
-              <tr key={User.id}>
-                <td> {User.firstName} </td>
-                <td> {User.lastName} </td>
-                <td> {User.email} </td>
+            {users.map((user) => (
+              <tr key={user.id}>
+                <td> {user.firstName} </td>
+                <td> {user.lastName} </td>
                 <td>
                   <Link
-                    to={`/add-User/${User.id}`}
+                    to={`/add-User/${user.id}`}
                     className="btn btn-info"
                     href=""
                   >
@@ -68,14 +66,14 @@ const ListUserComponent = () => {
                   </Link>
                   <button
                     style={{ marginLeft: "10px" }}
-                    onClick={() => toVeiwUser(User.id)}
+                    onClick={() => toVeiwUser(user.id)}
                     className="btn btn-info"
                   >
                     View
                   </button>
                   <button
                     style={{ marginLeft: "10px" }}
-                    onClick={(e) => deleteUser(e, User.id)}
+                    onClick={(e) => deleteUser(e, user.id)}
                     className="btn btn-danger"
                   >
                     Delete

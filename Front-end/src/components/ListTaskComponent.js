@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useUser } from '../services/UserProvider';
 
 
+
 const ListTaskComponent = () => {
   const [tasks, setTasks] = useState([]);
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ const ListTaskComponent = () => {
       navigate("/login");
     }
   }, []);
+
 
   const toVeiwTask = (id) => {
     let path = `/view-Task/${id}`;
@@ -50,6 +52,7 @@ const ListTaskComponent = () => {
               <th> Task Due Date</th>
               <th> Task Story Points</th>
               <th> Task Status</th>
+              <th> Actions</th>
             </tr>
           </thead>
           <tbody>
