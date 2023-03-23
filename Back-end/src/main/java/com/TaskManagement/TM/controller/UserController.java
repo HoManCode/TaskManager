@@ -59,9 +59,16 @@ public class UserController {
 
     //get all users by admin
     @GetMapping("/admin")
-    public ResponseEntity<?> getUsersAdmin(@AuthenticationPrincipal User user){
+    public ResponseEntity<?> getUsersByAdmin(@AuthenticationPrincipal User user){
         Set<User> allTasks = userService.findAllUsers(user.getAuthorities());
         return ResponseEntity.ok(allTasks);
+    }
+
+    //get users by Id admin
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getUserById(@PathVariable Long id,@AuthenticationPrincipal User user){
+        User usr = userService.selectAUser(id,user);
+        return ResponseEntity.ok(usr);
     }
 
 

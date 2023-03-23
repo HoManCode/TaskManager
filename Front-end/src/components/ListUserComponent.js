@@ -10,7 +10,7 @@ const ListUserComponent = () => {
 
 
   useEffect(() => {
-    UserService.getUsersAdmin(user.jwt).then((users) =>{
+    UserService.getUsersByAdmin(user.jwt).then((users) =>{
       setUsers(users);
     });
     if (!user.jwt) {

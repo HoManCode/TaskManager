@@ -2,6 +2,7 @@ package com.TaskManagement.TM.service;
 
 import com.TaskManagement.TM.Enum.Authority;
 import com.TaskManagement.TM.dto.UserDto;
+import com.TaskManagement.TM.exception.ResourceNotFoundException;
 import com.TaskManagement.TM.model.Authorities;
 import com.TaskManagement.TM.model.Task;
 import com.TaskManagement.TM.model.User;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -27,6 +29,7 @@ public class UserService {
 
     @Autowired
     private AuthorityRepository authorityRepository;
+    
 
     public void create(UserDto userDto){
         User user = new User();
@@ -71,4 +74,21 @@ public class UserService {
         }
         return users;
     }
+
+    public User selectAUser(Long id, User user) {
+        Optional<User> userOptional=Optional.empty();
+        if(isAdmin(user)){
+            userOptional = findById(id);
+        }
+        User usr = userOptional.orElseThrow(
+                () -> new ResourceNotFoundException("User does not exist with id: "+ id));
+        return usr;
+    }
+
+    private Optional<User> findById(Long id) {
+        return userRepository.findById(id);
+    }
+
+
+
 }

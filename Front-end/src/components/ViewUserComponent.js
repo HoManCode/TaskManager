@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
 import UserService from "../services/UserService";
 import { useParams } from "react-router-dom";
+import { useUser } from '../services/UserProvider';
 
 function ViewUserComponent() {
   const [User, setUser] = useState([]);
-
+  const user = useUser();
   const { id } = useParams();
 
   useEffect(() => {
     if (id) {
-      UserService.getUserById(id)
+      UserService.getUserById(id,user.jwt)
         .then((res) => {
-          setUser(res.data);
+          setUser(res);
         })
         .catch((e) => console.log(e));
     }
