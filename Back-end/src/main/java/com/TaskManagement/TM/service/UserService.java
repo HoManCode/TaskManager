@@ -90,5 +90,7 @@ public class UserService {
     }
 
 
-
+    public void delete(User usr) {
+        userRepository.delete(usr);
+    }
 }

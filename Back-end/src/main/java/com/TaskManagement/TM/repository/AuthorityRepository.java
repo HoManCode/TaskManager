@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AuthorityRepository extends JpaRepository<Authorities, Long> {
+
+    long deleteByUser_id(Long id);
 }

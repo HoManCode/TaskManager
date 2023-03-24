@@ -5,6 +5,7 @@ import com.TaskManagement.TM.exception.ResourceNotFoundException;
 import com.TaskManagement.TM.model.Task;
 import com.TaskManagement.TM.model.User;
 import com.TaskManagement.TM.repository.UserRepository;
+import com.TaskManagement.TM.service.AuthorityService;
 import com.TaskManagement.TM.service.UserService;
 import com.TaskManagement.TM.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    AuthorityService authorityService;
 
     @PostMapping("/register")
     private ResponseEntity<?> createUser(@RequestBody UserDto userDto){
@@ -68,6 +72,14 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserById(@PathVariable Long id,@AuthenticationPrincipal User user){
         User usr = userService.selectAUser(id,user);
+        return ResponseEntity.ok(usr);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id,@AuthenticationPrincipal User user){
+        User usr = userService.selectAUser(id,user);
+        authorityService.delete(usr.getId());
+        userService.delete(usr);
         return ResponseEntity.ok(usr);
     }
 

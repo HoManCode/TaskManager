@@ -19,9 +19,8 @@ const ListUserComponent = () => {
     }
   }, []);
 
-  function deleteUser(e, id) {
-    e.preventDefault();
-    UserService.deleteUserById(id)
+  function deleteUser(id) {
+    UserService.deleteUserById(id,user.jwt)
       .then(
         setUsers(
           users.filter((User) => User.email === id)
@@ -73,7 +72,7 @@ const ListUserComponent = () => {
                   </button>
                   <button
                     style={{ marginLeft: "10px" }}
-                    onClick={(e) => deleteUser(e, user.id)}
+                    onClick={() => deleteUser(user.id)}
                     className="btn btn-danger"
                   >
                     Delete
