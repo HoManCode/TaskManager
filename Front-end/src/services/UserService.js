@@ -14,6 +14,10 @@ class UserService {
   deleteUserById(id,userJwt) {
     return Promise.resolve(ajax(`${USER_API_BASE_URL}/${id}`,"DELETE",userJwt));
   }
+
+  updateUser(id,userJwt,UserData) {
+    return Promise.resolve(ajax(`${USER_API_BASE_URL}/${id}`,"PUT",userJwt,UserData));
+  }
 }
 
 export default new UserService();

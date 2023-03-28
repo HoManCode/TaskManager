@@ -21,10 +21,6 @@ const AdminDashboard = () => {
     {value:"TASKS",label:"Tasks"},
   ]
 
-  
-
-  
-
   const handleEvent = (e) => {
     setTitle(e);
   }
