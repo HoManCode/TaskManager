@@ -10,7 +10,7 @@ const CreateTaskComponent = () => {
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [storyPoints, setStoryPoints] = useState("");
-  const [status, setStatus] = useState("Status");
+  const [status, setStatus] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
   const user = useUser();
@@ -50,7 +50,7 @@ const CreateTaskComponent = () => {
     }
   }
 
-  function tile() {
+  function title() {
     if (id) {
       return "Update Task";
     } else {
@@ -92,7 +92,7 @@ const CreateTaskComponent = () => {
       <div className="container">
         <div className="row">
           <div className="card col-md-6 offset-md-3">
-            <h2 className="text-center">{tile()}</h2>
+            <h2 className="text-center">{title()}</h2>
             <div className="card-body">
               <form>
                 <div className="form-group mb-2">

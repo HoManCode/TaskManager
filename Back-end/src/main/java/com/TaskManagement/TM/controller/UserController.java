@@ -1,5 +1,6 @@
 package com.TaskManagement.TM.controller;
 
+import com.TaskManagement.TM.dto.TaskDto;
 import com.TaskManagement.TM.dto.UserDto;
 import com.TaskManagement.TM.exception.ResourceNotFoundException;
 import com.TaskManagement.TM.model.Task;
@@ -64,8 +65,8 @@ public class UserController {
     //get all users by admin
     @GetMapping("/admin")
     public ResponseEntity<?> getUsersByAdmin(@AuthenticationPrincipal User user){
-        Set<User> allTasks = userService.findAllUsers(user.getAuthorities());
-        return ResponseEntity.ok(allTasks);
+        Set<User> allUsers = userService.findAllUsers(user.getAuthorities());
+        return ResponseEntity.ok(allUsers);
     }
 
     //get users by Id admin
@@ -81,6 +82,15 @@ public class UserController {
         authorityService.delete(usr.getId());
         userService.delete(usr);
         return ResponseEntity.ok(usr);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateTask(@PathVariable Long id,
+                                        @AuthenticationPrincipal User user,
+                                        @RequestBody UserDto userDto){
+        User usr = userService.selectAUser(id,user);
+        User updatedUser = userService.update(id,usr,userDto);
+        return ResponseEntity.ok(updatedUser);
     }
 
 

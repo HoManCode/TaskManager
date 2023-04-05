@@ -1,7 +1,10 @@
 package com.TaskManagement.TM.dto;
 
+import com.TaskManagement.TM.model.Authorities;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+
+import java.util.Set;
 
 @Data
 public class UserDto {
@@ -14,5 +17,5 @@ public class UserDto {
     @JsonProperty("password")
     private String password;
     @JsonProperty("role")
-    private String role;
+    private Set<Authorities> role;
 }

@@ -1,6 +1,7 @@
 package com.TaskManagement.TM.service;
 
 import com.TaskManagement.TM.Enum.Authority;
+import com.TaskManagement.TM.dto.TaskDto;
 import com.TaskManagement.TM.dto.UserDto;
 import com.TaskManagement.TM.exception.ResourceNotFoundException;
 import com.TaskManagement.TM.model.Authorities;
@@ -38,7 +39,7 @@ public class UserService {
         user.setUsername(userDto.getUsername());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         Authorities authority = new Authorities();
-        switch (userDto.getRole()){
+        switch (userDto.getRole().toString()){
             case ("ADMIN"):
                 authority.setAuthority(Authority.ROLE_ADMIN);
                 break;
@@ -92,5 +93,13 @@ public class UserService {
 
     public void delete(User usr) {
         userRepository.delete(usr);
+    }
+
+    public User update(Long id, User usr, UserDto userDto) {
+        usr.setFirstName(userDto.getFirstName());
+        usr.setLastName(userDto.getLastName());
+        usr.setUsername(userDto.getUsername());
+        usr.setAuthorities(userDto.getRole());
+        return userRepository.save(usr);
     }
 }

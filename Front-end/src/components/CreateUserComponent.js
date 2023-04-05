@@ -1,15 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import UserService from "../services/UserService";
+import DropdownOptions from "./DropdownOptions";
+import DashNav from "../services/DashNav";
+import jwt_decode from "jwt-decode";
+import { useUser } from '../services/UserProvider';
 
 const CreateUserComponent = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [role, setRole] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
+  const user = useUser();
+  const [authorities, setAuthorities] = useState(null);
 
-  const UserData = { firstName, lastName, email };
+  const UserData = { firstName, lastName, username,role };
+  const options= [
+    {value:"ROLE_ADMIN",label:"ADMIN"},
+    {value:"ROLE_MANAGER",label:"MANAGER"},
+    {value:"ROLE_EMPLOYEE",label:"EMPLOYEE"},
+  ]
+
+  useEffect(() => {
+    if (user && user.jwt) {
+      const decodedJwt = jwt_decode(user.jwt);
+      setAuthorities(decodedJwt.authorities);
+    }
+  }, [user, user.jwt]);
 
   function saveUser(e) {
     e.preventDefault();
@@ -17,23 +36,24 @@ const CreateUserComponent = () => {
     if (
       UserData.firstName !== "" &&
       UserData.lastName !== "" &&
-      UserData.email !== ""
+      UserData.username !== "" &&
+      UserData.role !== ""
     ) {
       if (id) {
-        UserService.updateUser(id, UserData)
-          .then(navigate("/Users"))
-          .catch((e) => console.log(e));
+        UserService.updateUser(id,user.jwt, UserData)
+        .then(DashNav(authorities[0],navigate))
+        .catch((e) => console.log(e));
       } else {
         UserService.saveUser(UserData)
-          .then(navigate("/Users"))
-          .catch((e) => console.log(e));
+        .then(DashNav(authorities[0],navigate))
+        .catch((e) => console.log(e));
       }
     } else {
       alert("Please, fill in all inputes");
     }
   }
 
-  function tile() {
+  function title() {
     if (id) {
       return "Update User";
     } else {
@@ -43,27 +63,32 @@ const CreateUserComponent = () => {
 
   useEffect(() => {
     if (id) {
-      UserService.getUserById(id)
+      UserService.getUserById(id,user.jwt)
         .then((res) => {
-          setFirstName(res.data.firstName);
-          setLastName(res.data.lastName);
-          setEmail(res.data.email);
+          setFirstName(res.firstName);
+          setLastName(res.lastName);
+          setUsername(res.username);
+          setRole(res.role);
         })
         .catch((e) => console.log(e));
     }
-  }, []);
+  }, [id]);
 
   const routeChange = () => {
     let path = "/Users";
     navigate(path);
   };
 
+  const handleRole = (e) => {
+    setRole(e);
+  }
+
   return (
     <div>
       <div className="container">
         <div className="row">
           <div className="card col-md-6 offset-md-3">
-            <h2 className="text-center">{tile()}</h2>
+            <h2 className="text-center">{title()}</h2>
             <div className="card-body">
               <form>
                 <div className="form-group mb-2">
@@ -87,11 +112,14 @@ const CreateUserComponent = () => {
                 <div className="form-group mb-2">
                   <input
                     className="form-control"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     type="email"
-                    placeholder="Enter Email"
+                    placeholder="Enter username"
                   />
+                </div>
+                <div className="form-group mb-2">
+                <DropdownOptions title={`${role}`} options={options} handleEvent={handleRole}/>
                 </div>
                 <button
                   onClick={(e) => saveUser(e)}
