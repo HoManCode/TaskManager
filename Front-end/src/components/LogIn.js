@@ -97,7 +97,7 @@ return (
                 onClick={(e) => sendLoginRequest(e)}
                 className="btn btn-success"
               >
-                Login
+                Logout
               </button>{" "}
               <button className="btn btn-danger" onClick={() => navigate("/")}>
                 Cancel

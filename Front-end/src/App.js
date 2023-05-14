@@ -8,6 +8,7 @@ import CreateTaskComponent from "./components/CreateTaskComponent";
 import ViewUserComponent from "./components/ViewUserComponent";
 import ViewTaskComponent from "./components/ViewTaskComponent";
 import Login from "./components/Login";
+import Logout from "./components/Logout";
 import PrivateRoute from "./components/PrivateRoute"
 import HomePage from "./components/HomePage"
 import EmployeeDashboard from "./components/EmployeeDashboard";
@@ -39,6 +40,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/logout" element={<Logout />} />
           <Route path="/" element={<HomePage />} />
           <Route
             path="/admins/dashboard"
