@@ -5,6 +5,12 @@ import { useUser } from "../services/UserProvider";
 const Logout = () => {
     const user = useUser();
     const navigate = useNavigate(); 
+
+    const removeUserNavigate = () => {
+      localStorage.removeItem(user);
+      navigate("/");
+    }
+
     return (
         <div>
     <div className="container">
@@ -13,7 +19,7 @@ const Logout = () => {
           <h2 className="text-center">Are you sure you want to log out from TMS?</h2>
           <div className="form-group mb-2">
             <button
-                onClick={() => localStorage.removeItem(user)}
+                onClick={() => removeUserNavigate()}
                 className="btn btn-success"
               >
                 Logout
