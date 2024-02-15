@@ -16,7 +16,7 @@ const Logout = () => {
                 onClick={() => localStorage.removeItem(user)}
                 className="btn btn-success"
               >
-                Login
+                Logout
             </button>{" "}
             <button className="btn btn-danger" onClick={() => navigate("/")}>
                 Cancel
