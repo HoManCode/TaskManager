@@ -8,6 +8,7 @@ const Login = () =>{
   const user = useUser();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
   const navigate = useNavigate(); 
   const [authorities, setAuthorities] = useState([]);
@@ -81,9 +82,20 @@ return (
                   className="form-control"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  type="text"
+                  type={showPassword ? "text" : "password"}
                   placeholder="Password"
                 />
+              </div>
+              <div className="showPass">
+                <input
+                    id="check"
+                    type="checkbox"
+                    value={showPassword}
+                    onChange={() =>
+                        setShowPassword((prev) => !prev)
+                    }
+                />
+                <label for="checkbox">Show password</label>
               </div>
               {errorMsg ? (
               <div className="form-group mb-2">
