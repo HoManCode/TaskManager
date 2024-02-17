@@ -1,13 +1,15 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../services/UserProvider";
+import AuthService from "../services/AuthService";
 
 const Logout = () => {
     const user = useUser();
     const navigate = useNavigate(); 
 
     const removeUserNavigate = () => {
-      localStorage.removeItem(user);
+      localStorage.removeItem(user.jwt);
+      AuthService.logoutUser();
       navigate("/");
     }
 
