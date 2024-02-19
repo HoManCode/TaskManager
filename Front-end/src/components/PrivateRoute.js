@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import ajax from "../services/ajax"
 import { useUser } from '../services/UserProvider';
+import AuthService from "../services/AuthService";
 
 const PrivateRoute = (props) => {
     const user = useUser();
@@ -9,8 +9,8 @@ const PrivateRoute = (props) => {
     const [isValid, setIsValid] = useState(null);
     const { children } = props;
 
-    if( user && user.jwt ){
-        ajax(`/api/auth/validate`,"get",user.jwt)
+    if( user.jwt ){
+        AuthService.validateUser(user.jwt)
         .then((isValid) => {
             setIsValid(isValid);
             setIsLoaded(false);
