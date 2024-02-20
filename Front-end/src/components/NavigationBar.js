@@ -4,13 +4,17 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { useUser } from "../services/UserProvider";
 
-function NavigationBar() {
+function NavigationBar(props) {
   const user = useUser();
   return (
     <>
       <Navbar bg="primary" variant="dark">
         <Container>
-          <Navbar.Brand href="/">Task Management System</Navbar.Brand>
+          {user.jwt ?
+            <Navbar.Brand href="/">Hello {props.username}</Navbar.Brand>
+            :
+            <Navbar.Brand href="/">Task Management System </Navbar.Brand>
+          }
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
             {user.jwt ? 

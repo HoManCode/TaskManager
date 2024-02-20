@@ -20,22 +20,22 @@ import { useUser } from "./services/UserProvider";
 
 function App() {
   const [roles, setRoles] = useState([]);
+  const [username, setusername] = useState("");
   const user = useUser();
 
   useEffect(() =>{
-    setRoles(getRolesFromJWT());
-  },[user.jwt]);
-
-  function getRolesFromJWT() {
     if(user.jwt){
       const decodedJwt = jwt_decode(user.jwt);
-      return decodedJwt.authorities;
+      setRoles(decodedJwt.authorities);
+      setusername(decodedJwt.sub);
     }
-    return [];
-  }
+  },[user.jwt]);
+
+
+
   return (
     <BrowserRouter>
-      <HeaderComponents />
+      <HeaderComponents username = {username}/>
       <div className="container">
         <Routes>
           <Route path="/login" element={<Login />} />
