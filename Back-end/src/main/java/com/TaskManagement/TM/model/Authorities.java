@@ -2,6 +2,7 @@ package com.TaskManagement.TM.model;
 
 import com.TaskManagement.TM.Enum.Authority;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -9,25 +10,35 @@ import javax.persistence.*;
 @Entity
 @Table(name="authorities")
 public class Authorities implements GrantedAuthority {
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Getter
     @ManyToOne
     @JsonIgnore
     private User user;
     private Authority authority;
 
+    public Authorities() {
+    }
 
-    public Long getId() {
-        return id;
+    public Authorities(String auth){
+        switch (auth){
+            case ("ADMIN"):
+                authority = Authority.ROLE_ADMIN;
+                break;
+            case ("MANAGER"):
+                authority = Authority.ROLE_MANAGER;
+                break;
+            case ("EMPLOYEE"):
+                authority = Authority.ROLE_EMPLOYEE;
+                break;
+        }
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public User getUser() {
-        return user;
     }
 
     public void setUser(User user) {
@@ -66,6 +77,11 @@ public class Authorities implements GrantedAuthority {
         } else if (!authority.equals(other.authority))
             return false;
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return this.authority.toString();
     }
 
 }

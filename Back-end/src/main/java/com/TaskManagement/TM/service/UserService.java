@@ -1,11 +1,8 @@
 package com.TaskManagement.TM.service;
 
-import com.TaskManagement.TM.Enum.Authority;
-import com.TaskManagement.TM.dto.TaskDto;
 import com.TaskManagement.TM.dto.UserDto;
 import com.TaskManagement.TM.exception.ResourceNotFoundException;
 import com.TaskManagement.TM.model.Authorities;
-import com.TaskManagement.TM.model.Task;
 import com.TaskManagement.TM.model.User;
 import com.TaskManagement.TM.repository.AuthorityRepository;
 import com.TaskManagement.TM.repository.UserRepository;
@@ -18,6 +15,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static com.TaskManagement.TM.Enum.Authority.*;
 
 @Service
 public class UserService {
@@ -38,21 +37,28 @@ public class UserService {
         user.setLastName(userDto.getLastName());
         user.setUsername(userDto.getUsername());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        Authorities authority = new Authorities();
-        switch (userDto.getRole().toString()){
-            case ("ADMIN"):
-                authority.setAuthority(Authority.ROLE_ADMIN);
-                break;
-            case ("MANAGER"):
-                authority.setAuthority(Authority.ROLE_MANAGER);
-                break;
-            case ("EMPLOYEE"):
-                authority.setAuthority(Authority.ROLE_EMPLOYEE);
-                break;
+        Authorities authorities = new Authorities();
+        Optional<Authorities> auth = userDto.getRole().stream().findFirst();
+        if(auth.isPresent()){
+            switch (auth.get().toString()){
+                case ("ROLE_ADMIN"):
+                    authorities.setAuthority(ROLE_ADMIN);
+                    break;
+                case ("ROLE_MANAGER"):
+                    authorities.setAuthority(ROLE_MANAGER);
+                    break;
+                case ("ROLE_EMPLOYEE"):
+                    authorities.setAuthority(ROLE_EMPLOYEE);
+                    break;
+            }
         }
+        HashSet<Authorities> authoritySet = new HashSet<>();
+        authoritySet.add(authorities);
+        user.setAuthorities(authoritySet);
         userRepository.save(user);
-        authority.setUser(user);
-        authorityRepository.save(authority);
+        authorities.setUser(user);
+        authorityRepository.save(authorities);
+
     }
 
     public boolean isAdmin(User user){
@@ -60,9 +66,9 @@ public class UserService {
                 .getAuthorities()
                 .stream()
                 .filter((auth) -> auth.getAuthority().equals("ROLE_ADMIN"))
-                .collect(Collectors.toList());
+                .toList();
 
-        return authoritiesList.size()>0;
+        return !authoritiesList.isEmpty();
 
     }
 
@@ -70,7 +76,7 @@ public class UserService {
     public Set<User> findAllUsers(Set<Authorities> authorities) {
         Set<User> users = new HashSet<>();
         List<Authorities> authoritiesList = authorities.stream().filter((auth) -> auth.getAuthority().equals("ROLE_ADMIN")).collect(Collectors.toList());
-        if(authoritiesList.size()>0){
+        if(!authoritiesList.isEmpty()){
             users.addAll(userRepository.findAll());
         }
         return users;
