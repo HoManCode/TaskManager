@@ -28,10 +28,10 @@ const Signup = () =>{
       lastName: lastName,
       username: username,
       password: password,
-      role:role,
+      role: [role]
     }
 
-    fetch("api/users/register", { 
+    fetch("/api/users/register", { 
       headers: { 
         "Content-Type": "application/json"
        },
