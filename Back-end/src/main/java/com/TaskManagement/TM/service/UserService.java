@@ -31,7 +31,7 @@ public class UserService {
     private AuthorityRepository authorityRepository;
     
 
-    public void create(UserDto userDto){
+    public UserDto create(UserDto userDto){
         User user = new User();
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
@@ -59,6 +59,7 @@ public class UserService {
         authorities.setUser(user);
         authorityRepository.save(authorities);
 
+        return userDto;
     }
 
     public boolean isAdmin(User user){

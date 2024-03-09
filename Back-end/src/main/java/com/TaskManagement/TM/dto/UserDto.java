@@ -2,11 +2,13 @@ package com.TaskManagement.TM.dto;
 
 import com.TaskManagement.TM.model.Authorities;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.Set;
 
 @Data
+@Builder
 public class UserDto {
     @JsonProperty("firstName")
     private String firstName;
