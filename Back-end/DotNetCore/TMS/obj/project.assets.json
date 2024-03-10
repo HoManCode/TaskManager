@@ -465,11 +465,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/hoomanshykhipour/Documents/Learning/fullStack/Task Manager/Back-end/DotNetCore/TMS/TMS/TMS.csproj",
+      "projectUniqueName": "/Users/hoomanshykhipour/Documents/Learning/fullStack/Task Manager/Back-end/DotNetCore/TMS/TMS.csproj",
       "projectName": "TMS",
-      "projectPath": "/Users/hoomanshykhipour/Documents/Learning/fullStack/Task Manager/Back-end/DotNetCore/TMS/TMS/TMS.csproj",
+      "projectPath": "/Users/hoomanshykhipour/Documents/Learning/fullStack/Task Manager/Back-end/DotNetCore/TMS/TMS.csproj",
       "packagesPath": "/Users/hoomanshykhipour/.nuget/packages/",
-      "outputPath": "/Users/hoomanshykhipour/Documents/Learning/fullStack/Task Manager/Back-end/DotNetCore/TMS/TMS/obj/",
+      "outputPath": "/Users/hoomanshykhipour/Documents/Learning/fullStack/Task Manager/Back-end/DotNetCore/TMS/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/hoomanshykhipour/.nuget/NuGet/NuGet.Config"
