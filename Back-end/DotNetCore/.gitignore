@@ -1,2 +1,4 @@
 .DS_Store
-!**/TMC/obj/**
+!**/TMS/obj/**
+!**/TMS/bin/**
+/TMS/.idea

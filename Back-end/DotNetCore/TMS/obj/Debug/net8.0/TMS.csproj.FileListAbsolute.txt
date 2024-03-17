@@ -1,0 +1,8 @@
+/Users/hoomanshykhipour/Documents/Learning/fullStack/Task Manager/Back-end/DotNetCore/TMS/obj/Debug/net8.0/TMS.csproj.AssemblyReference.cache
+/Users/hoomanshykhipour/Documents/Learning/fullStack/Task Manager/Back-end/DotNetCore/TMS/obj/Debug/net8.0/TMS.GeneratedMSBuildEditorConfig.editorconfig
+/Users/hoomanshykhipour/Documents/Learning/fullStack/Task Manager/Back-end/DotNetCore/TMS/obj/Debug/net8.0/TMS.AssemblyInfoInputs.cache
+/Users/hoomanshykhipour/Documents/Learning/fullStack/Task Manager/Back-end/DotNetCore/TMS/obj/Debug/net8.0/TMS.AssemblyInfo.cs
+/Users/hoomanshykhipour/Documents/Learning/fullStack/Task Manager/Back-end/DotNetCore/TMS/obj/Debug/net8.0/TMS.csproj.CoreCompileInputs.cache
+/Users/hoomanshykhipour/Documents/Learning/fullStack/Task Manager/Back-end/DotNetCore/TMS/obj/Debug/net8.0/TMS.MvcApplicationPartsAssemblyInfo.cs
+/Users/hoomanshykhipour/Documents/Learning/fullStack/Task Manager/Back-end/DotNetCore/TMS/obj/Debug/net8.0/TMS.MvcApplicationPartsAssemblyInfo.cache
+/Users/hoomanshykhipour/Documents/Learning/fullStack/Task Manager/Back-end/DotNetCore/TMS/obj/Debug/net8.0/TMS.sourcelink.json
