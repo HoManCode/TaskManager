@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace TMS.Models;
 
-public partial class Authority
+public partial class Authorities
 {
     public long Id { get; set; }
 
-    public int? Authority1 { get; set; }
+    public int? Authority { get; set; }
 
     public long? UserId { get; set; }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TMS.Enum;
 
 namespace TMS.Models;
 
@@ -19,5 +20,4 @@ public partial class User
 
     public virtual ICollection<Authority> Authorities { get; set; } = new List<Authority>();
 
-    public virtual ICollection<Authority1> Authority1s { get; set; } = new List<Authority1>();
 }

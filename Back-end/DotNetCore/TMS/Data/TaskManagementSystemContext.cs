@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using TMS.Enum;
 using TMS.Models;
 
 namespace TMS.Data;
@@ -17,10 +18,6 @@ public partial class TaskManagementSystemContext : DbContext
     }
 
     public virtual DbSet<Authority> Authorities { get; set; }
-
-    public virtual DbSet<Authority1> Authorities1 { get; set; }
-
-    public virtual DbSet<HibernateSequence> HibernateSequences { get; set; }
 
     public virtual DbSet<Task> Tasks { get; set; }
 
@@ -44,34 +41,7 @@ public partial class TaskManagementSystemContext : DbContext
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("FKk91upmbueyim93v469wj7b2qh");
         });
-
-        modelBuilder.Entity<Authority1>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
-
-            entity.ToTable("authority");
-
-            entity.HasIndex(e => e.UserId, "FKka37hl6mopj61rfbe97si18p8");
-
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Authority)
-                .HasMaxLength(255)
-                .HasColumnName("authority");
-            entity.Property(e => e.UserId).HasColumnName("user_id");
-
-            entity.HasOne(d => d.User).WithMany(p => p.Authority1s)
-                .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FKka37hl6mopj61rfbe97si18p8");
-        });
-
-        modelBuilder.Entity<HibernateSequence>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToTable("hibernate_sequence");
-
-            entity.Property(e => e.NextVal).HasColumnName("next_val");
-        });
+        
 
         modelBuilder.Entity<Task>(entity =>
         {
