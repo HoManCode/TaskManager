@@ -7,7 +7,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @ActiveProfiles("test")
-@ComponentScan(basePackages = {"com.TaskManagement.TM"})
+@ComponentScan(basePackages = {"com.TaskManagement.TM.*"})
 class TmApplicationTests {
 
 	@Test

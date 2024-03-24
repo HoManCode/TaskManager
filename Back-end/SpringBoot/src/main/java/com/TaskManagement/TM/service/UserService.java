@@ -76,7 +76,7 @@ public class UserService {
 
     public Set<User> findAllUsers(Set<Authorities> authorities) {
         Set<User> users = new HashSet<>();
-        List<Authorities> authoritiesList = authorities.stream().filter((auth) -> auth.getAuthority().equals("ROLE_ADMIN")).collect(Collectors.toList());
+        List<Authorities> authoritiesList = authorities.stream().filter((auth) -> auth.getAuthority().equals("ROLE_ADMIN")).toList();
         if(!authoritiesList.isEmpty()){
             users.addAll(userRepository.findAll());
         }

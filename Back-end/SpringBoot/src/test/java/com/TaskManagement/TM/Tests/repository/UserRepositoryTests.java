@@ -16,8 +16,7 @@ import static com.TaskManagement.TM.Enum.Authority.ROLE_ADMIN;
 
 @DataJpaTest
 @ActiveProfiles("test")
-@TestPropertySource(
-        locations = "classpath:application-test.properties")
+@TestPropertySource(locations = "classpath:application-test.properties")
 public class UserRepositoryTests {
 
     @Autowired
