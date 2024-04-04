@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using Microsoft.EntityFrameworkCore;
 using TMS.Enum;
 using TMS.Models;
 
 namespace TMS.Data;
 
-public partial class TaskManagementSystemContext : DbContext
+public partial class TmsContext : DbContext 
 {
-    public TaskManagementSystemContext()
+    public TmsContext()
     {
     }
 
-    public TaskManagementSystemContext(DbContextOptions<TaskManagementSystemContext> options)
+    public TmsContext(DbContextOptions<TmsContext> options)
         : base(options)
     {
     }
@@ -23,6 +22,7 @@ public partial class TaskManagementSystemContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
     
+    /*
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Authority>(entity =>
@@ -89,6 +89,6 @@ public partial class TaskManagementSystemContext : DbContext
 
         OnModelCreatingPartial(modelBuilder);
     }
-
+    */
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }
