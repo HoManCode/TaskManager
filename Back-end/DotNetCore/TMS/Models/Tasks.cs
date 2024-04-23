@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TMS.Models;
 
-public partial class Task
+public partial class Tasks
 {
     public long Id { get; set; }
 

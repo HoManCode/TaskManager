@@ -1,4 +1,4 @@
-package com.TaskManagement.TM.Tests.repository;
+package com.TaskManagement.TM.repository;
 
 import com.TaskManagement.TM.model.User;
 import com.TaskManagement.TM.repository.UserRepository;

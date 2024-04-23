@@ -1,8 +1,8 @@
 namespace TMS.Enum;
 
-public enum Authority
+/*public enum Authority
 {
     ROLE_ADMIN,
     ROLE_MANAGER,
     ROLE_EMPLOYEE
-}
+}*/

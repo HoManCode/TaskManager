@@ -2,7 +2,7 @@ package com.TaskManagement.TM.service;
 import com.TaskManagement.TM.dto.TaskDto;
 import com.TaskManagement.TM.exception.ResourceNotFoundException;
 import com.TaskManagement.TM.model.Authorities;
-import com.TaskManagement.TM.model.Task;
+import com.TaskManagement.TM.model.Tasks;
 import com.TaskManagement.TM.model.User;
 import com.TaskManagement.TM.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class TaskService {
+public class TasksService {
 
     @Autowired
     private TaskRepository taskRepository;
@@ -23,51 +23,51 @@ public class TaskService {
     private UserService userService;
 
 
-    public Task create(User user, TaskDto taskDto) {
+    public Tasks create(User user, TaskDto taskDto) {
 
-        Task task = new Task();
-        task.setDescription(taskDto.getDescription());
-        task.setDueDate(taskDto.getDueDate());
-        task.setStoryPoints(taskDto.getStoryPoints());
-        task.setStatus(taskDto.getStatus());
-        task.setUsername(user.getUsername());
+        Tasks tasks = new Tasks();
+        tasks.setDescription(taskDto.getDescription());
+        tasks.setDueDate(taskDto.getDueDate());
+        tasks.setStoryPoints(taskDto.getStoryPoints());
+        tasks.setStatus(taskDto.getStatus());
+        tasks.setUsername(user.getUsername());
 
-        return taskRepository.save(task);
+        return taskRepository.save(tasks);
     }
 
-    public Set<Task> findByUsername(String username){
+    public Set<Tasks> findByUsername(String username){
         return taskRepository.findByUsername(username);
     }
 
-    public Optional<Task> findById(Long id){
+    public Optional<Tasks> findById(Long id){
         return taskRepository.findById(id);
     }
 
 
-    public Task save(Task task) {
+    public Tasks save(Tasks tasks) {
 
-        return taskRepository.save(task);
+        return taskRepository.save(tasks);
     }
 
-    public Task update(Long id, TaskDto taskDto) {
+    public Tasks update(Long id, TaskDto taskDto) {
 
-        Task task = taskRepository.findById(id).orElseThrow(
+        Tasks tasks = taskRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("User does not exist with id: "+ id));
 
-        task.setDescription(taskDto.getDescription());
-        task.setDueDate(taskDto.getDueDate());
-        task.setStoryPoints(taskDto.getStoryPoints());
-        task.setStatus(taskDto.getStatus());
+        tasks.setDescription(taskDto.getDescription());
+        tasks.setDueDate(taskDto.getDueDate());
+        tasks.setStoryPoints(taskDto.getStoryPoints());
+        tasks.setStatus(taskDto.getStatus());
 
-        return taskRepository.save(task);
+        return taskRepository.save(tasks);
     }
 
-    public void delete(Task task) {
-        taskRepository.delete(task);
+    public void delete(Tasks tasks) {
+        taskRepository.delete(tasks);
     }
 
-    public Set<Task> findAllTasks(Set<Authorities> authorities) {
-        Set<Task> tasks = new HashSet<>();
+    public Set<Tasks> findAllTasks(Set<Authorities> authorities) {
+        Set<Tasks> tasks = new HashSet<>();
         List<Authorities> authoritiesList = authorities.stream().filter((auth) -> auth.getAuthority().equals("ROLE_ADMIN")).collect(Collectors.toList());
         if(authoritiesList.size()>0){
             tasks.addAll(taskRepository.findAll());
@@ -75,18 +75,18 @@ public class TaskService {
         return tasks;
     }
 
-    public Task selectATask(Long id,User user){
-        Optional<Task> taskOptional;
+    public Tasks selectATask(Long id, User user){
+        Optional<Tasks> taskOptional;
         if(userService.isAdmin(user)){
             taskOptional = findById(id);
         }else{
-            Set<Task> tasksByUsername = findByUsername(user.getUsername());
+            Set<Tasks> tasksByUsername = findByUsername(user.getUsername());
             taskOptional = tasksByUsername.stream().filter(tas->tas.getId() == id).findFirst();
         }
-        Task task = taskOptional.orElseThrow(
+        Tasks tasks = taskOptional.orElseThrow(
                 () -> new ResourceNotFoundException("User does not exist with id: "+ id));
 
-        return task;
+        return tasks;
     }
 
 

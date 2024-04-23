@@ -18,6 +18,6 @@ public partial class User
 
     public string? Username { get; set; }
 
-    public virtual ICollection<Authority> Authorities { get; set; } = new List<Authority>();
+    public virtual ICollection<Authorities> Authorities { get; set; } = new List<Authorities>();
 
 }

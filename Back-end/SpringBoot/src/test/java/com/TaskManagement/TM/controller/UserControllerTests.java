@@ -1,4 +1,4 @@
-package com.TaskManagement.TM.Tests.controller;
+package com.TaskManagement.TM.controller;
 
 import com.TaskManagement.TM.controller.UserController;
 import com.TaskManagement.TM.dto.UserDto;

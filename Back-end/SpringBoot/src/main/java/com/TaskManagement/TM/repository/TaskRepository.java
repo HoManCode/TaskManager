@@ -1,7 +1,6 @@
 package com.TaskManagement.TM.repository;
 
-import com.TaskManagement.TM.model.Task;
-import com.TaskManagement.TM.model.User;
+import com.TaskManagement.TM.model.Tasks;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,8 +8,8 @@ import java.util.Optional;
 import java.util.Set;
 
 @Repository
-public interface TaskRepository extends JpaRepository<Task, Long> {
-    Set<Task> findByUsername(String username);
+public interface TaskRepository extends JpaRepository<Tasks, Long> {
+    Set<Tasks> findByUsername(String username);
 
-    Optional<Task> findById(Long id);
+    Optional<Tasks> findById(Long id);
 }

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using TMS.Enum;
 using TMS.Models;
 
+
 namespace TMS.Data;
 
 public partial class TmsContext : DbContext 
@@ -16,9 +17,9 @@ public partial class TmsContext : DbContext
     {
     }
 
-    public virtual DbSet<Authority> Authorities { get; set; }
+    public virtual DbSet<Authorities> Authorities { get; set; }
 
-    public virtual DbSet<Task> Tasks { get; set; }
+    public virtual DbSet<Tasks> Tasks { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
     
@@ -43,7 +44,7 @@ public partial class TmsContext : DbContext
         });
         
 
-        modelBuilder.Entity<Task>(entity =>
+        modelBuilder.Entity<Tasks>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 

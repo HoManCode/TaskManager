@@ -11,12 +11,23 @@ public class TaskController : Controller
 
     public TaskController(TmsContext context)
     {
-        this._context = context;
+        _context = context;
     }
     // GET
-    [HttpGet]
-    public string GetTasks()
+    [HttpGet("{id}")]
+    public ActionResult<Task> GetTaskById(int id)
     {
-        return "GetAllTasks";
+        var task = _context.Find<Task>(id);
+        if (task == null)
+        {
+            return NotFound(); // Return 404 Not Found if task not found
+        }
+        return Ok(task);
+    }
+    
+    [HttpGet]
+    public ActionResult<string> GetTask()
+    {
+        return Ok("task");
     }
 }

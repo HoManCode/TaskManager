@@ -1,9 +1,6 @@
 package com.TaskManagement.TM.controller;
 
-import com.TaskManagement.TM.dto.TaskDto;
 import com.TaskManagement.TM.dto.UserDto;
-import com.TaskManagement.TM.exception.ResourceNotFoundException;
-import com.TaskManagement.TM.model.Task;
 import com.TaskManagement.TM.model.User;
 import com.TaskManagement.TM.repository.UserRepository;
 import com.TaskManagement.TM.service.AuthorityService;
