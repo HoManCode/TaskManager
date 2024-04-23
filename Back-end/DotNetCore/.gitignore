@@ -2,3 +2,5 @@
 !**/TMS/obj/**
 !**/TMS/bin/**
 /TMS/.idea
+TMS/appsettings.json
+TMS/appsettings.Development.json
