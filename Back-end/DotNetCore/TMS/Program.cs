@@ -1,3 +1,5 @@
+using System.Configuration;
+using Microsoft.EntityFrameworkCore;
 using TMS.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +10,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<TmsContext>();
+
+var connectionString = builder.Configuration.GetConnectionString("ConnectionStrings:MySqlConnection");
+builder.Services.AddDbContext<TmsContext>(options =>
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 
 var app = builder.Build();
