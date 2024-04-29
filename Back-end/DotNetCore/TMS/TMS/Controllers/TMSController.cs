@@ -9,12 +9,12 @@ namespace TMS.Controllers;
 public class TMSController : ControllerBase
 {
     private readonly TMSContext _context;
-    
+
     public TMSController(TMSContext context)
     {
         _context = context;
     }
-    
+
     [HttpGet("{id}")]
     public async Task<IActionResult> GetTaskById(int id)
     {
