@@ -1,18 +1,19 @@
 using Microsoft.AspNetCore.Mvc;
 using TMS.Data;
 using TMS.Models;
+using TMS.Repository;
 
 namespace TMS.Controllers;
 
 [Route("api/TMS")]
 [ApiController]
-public class TMSController : ControllerBase
+public class TasksController : ControllerBase
 {
-    private readonly TMSContext _context;
+    private readonly ITasksRepository _tasksRepository;
 
-    public TMSController(TMSContext context)
+    public TasksController(ITasksRepository tasksRepository)
     {
-        _context = context;
+        _tasksRepository = tasksRepository;
     }
 
     [HttpGet("{id}")]
@@ -22,7 +23,7 @@ public class TMSController : ControllerBase
         {
             return BadRequest("Invalid id");
         }
-        var task = await _context.Tasks.FindAsync(id);
+        var task = await _tasksRepository.GetById(id);
         if (task != null) return Ok(task);
         return NotFound("Product does not exist");
     }
