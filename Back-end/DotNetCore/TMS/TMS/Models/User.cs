@@ -1,13 +1,16 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TMS.Models;
 
 public class User
 {
     [Key]
-    public long Id { get; set; }
+    public int Id { get; set; }
+    [Column("first_name")]
     public string firstName { get; set; }
+    [Column("last_name")]
     public string lastName { get; set; }
     public string email { get; set; }
     public string username { get; set; }
