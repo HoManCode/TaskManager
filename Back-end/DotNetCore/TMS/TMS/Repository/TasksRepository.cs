@@ -15,4 +15,14 @@ public class TasksRepository : ITasksRepository
     {
         return await _context.Tasks.FindAsync(id);
     }
+
+    public async Task<IEnumerable<Tasks?>> GetByUsername(string username)
+    {
+        IQueryable<Tasks> tasks = _context.Tasks;
+
+        tasks = tasks.Where(
+            t => t.username.Equals(username));
+        
+        return tasks;
+    }
 }

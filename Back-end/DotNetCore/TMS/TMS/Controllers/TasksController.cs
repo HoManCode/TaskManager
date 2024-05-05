@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TMS.Data;
 using TMS.Models;
@@ -5,7 +6,7 @@ using TMS.Repository;
 
 namespace TMS.Controllers;
 
-[Route("api/TMS")]
+[Route("api/tasks")]
 [ApiController]
 public class TasksController : ControllerBase
 {
@@ -24,6 +25,14 @@ public class TasksController : ControllerBase
             return BadRequest("Invalid id");
         }
         var task = await _tasksRepository.GetById(id);
+        if (task != null) return Ok(task);
+        return NotFound("Product does not exist");
+    }
+    
+    [HttpGet("/users/{username}")]
+    public async Task<IActionResult> GetTaskByUsername(string username)
+    {
+        var task = await _tasksRepository.GetByUsername(username);
         if (task != null) return Ok(task);
         return NotFound("Product does not exist");
     }
