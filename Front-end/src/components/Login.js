@@ -21,43 +21,40 @@ const Login = () =>{
     }
   }, [user, user.jwt]);
 
-  const sendLoginRequest = (e) => {
+  const sendLoginRequest = async (e) => {
     e.preventDefault();
     setErrorMsg("");
     const reqBody = {
       username: username,
       password: password,
-    }
-
-    fetch("api/auth/login", { 
-      headers: { 
-        "Content-Type": "application/json"
-       },
-      method: "post",
-      body: JSON.stringify(reqBody),
-    })
-    .then((response) => {
-      if (response.status === 200) return response.text();
-      else if (response.status === 401 || response.status === 403) {
-        setErrorMsg("Invalid username or password");
-      } else {
-        setErrorMsg(
-          "Something went wrong"
-        );
-      }
-    })
-    .then((data) => {
-      if (data) {
+    };
+  
+    try {
+      const response = await fetch("api/auth/login", {
+        headers: {
+          "Content-Type": "application/json"
+        },
+        method: "post",
+        body: JSON.stringify(reqBody),
+      });
+  
+      if (response.status === 200) {
+        const data = await response.text();
         user.setJwt(data);
         if (user && user.jwt) {
           const decodedJwt = jwt_decode(user.jwt);
           setAuthorities(decodedJwt.authorities);
         }
-        DashNav(authorities[0],navigate); 
+        DashNav(authorities[0], navigate);
+      } else if (response.status === 401 || response.status === 403) {
+        setErrorMsg("Invalid username or password");
+      } else {
+        setErrorMsg("Something went wrong");
       }
-    });
-
-  }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
 
 return (
